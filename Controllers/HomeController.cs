@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,8 +19,18 @@ namespace webtest1.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            _logger.LogInformation(new EventId(9999, "Debug"), @"*********************WOOHOO*****************************" );
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("http://mssqltest1.incomm-poc/health/live"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _logger.LogInformation("{apiResponse}", apiResponse );
+                    //reservationList = JsonConvert.DeserializeObject<List<Reservation>>(apiResponse);
+                }
+            }
             return View();
         }
 

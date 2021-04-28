@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using webtest1.Controllers;
 
 namespace webtest1
 {
@@ -23,6 +25,11 @@ namespace webtest1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks()
+                .AddCheck<LiveCheck>("live_check", null, new[] { "live" })
+                .AddCheck<ReadyCheck>("ready_check", null, new[] { "ready" })
+                .AddCheck<StartupCheck>("startup_check", null, new[] { "startup" });
+                
             services.AddControllersWithViews();
         }
 
@@ -51,6 +58,9 @@ namespace webtest1
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("live")});
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("ready")});
+                endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("startup")});
             });
         }
     }
