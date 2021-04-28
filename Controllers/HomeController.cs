@@ -20,17 +20,7 @@ namespace webtest1.Controllers
         }
 
         public async Task<IActionResult> Index()
-        {
-            _logger.LogInformation(new EventId(9999, "Debug"), @"*********************WOOHOO*****************************" );
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("http://mssqltest1.incomm-poc/health/live"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    _logger.LogInformation("{apiResponse}", apiResponse );
-                    //reservationList = JsonConvert.DeserializeObject<List<Reservation>>(apiResponse);
-                }
-            }
+        {            
             return View();
         }
 
