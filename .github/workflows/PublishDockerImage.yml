@@ -7,11 +7,7 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    steps:
-      - name: Output Run ID
-        run: echo ${{ github.run_id }}
-      - name: Output Run Number
-        run: echo ${{ github.run_number }}
+    steps:      
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Docker meta
@@ -32,6 +28,6 @@ jobs:
         with:
           context: .
           push: true          
-          tags:   ${{ steps.meta.outputs.tags }}
+          tags:   ${{ github.run_number }}, latest
           labels: ${{ steps.meta.outputs.labels }}    
 
