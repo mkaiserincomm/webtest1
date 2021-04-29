@@ -23,13 +23,18 @@ namespace webtest1.Controllers
         {            
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        public IActionResult CustomerList()
         {
             return View();
         }
 
-        public IActionResult CustomerList()
+        public IActionResult EmployeeList()
+        {
+            return View();
+        }
+
+        public IActionResult ProductList()
         {
             return View();
         }
