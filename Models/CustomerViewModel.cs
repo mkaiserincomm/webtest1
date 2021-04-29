@@ -25,7 +25,7 @@ namespace webtest1.Models
         private async Task<IEnumerable<Customer>> GetCustomers()
         {
             //var request = new HttpRequestMessage(HttpMethod.Get,"https://mssqltest1.kaiser.guru/api/Customer");
-            var request = new HttpRequestMessage(HttpMethod.Get,"https://mssqltest1.incomm-poc/api/Customer");            
+            var request = new HttpRequestMessage(HttpMethod.Get,"http://mssqltest1.incomm-poc/api/Customer");            
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);            
 
