@@ -1,6 +1,31 @@
+@model CustomerViewModel
 @{
     ViewData["Title"] = "Customer List";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>This will display a list of Customers</p>
+@(Html
+    .Grid(Model.Customers)
+    .Build(columns =>
+    {
+        columns.Add(Model => Model.customerId).Titled("Customer Id");
+        columns.Add(Model => Model.companyName).Titled("Company Name");
+        columns.Add(Model => Model.contactName).Titled("Contact Name");
+        columns.Add(Model => Model.contactTitle).Titled("Contact Title");
+        columns.Add(Model => Model.address).Titled("Address");
+        columns.Add(Model => Model.city).Titled("City");
+        columns.Add(Model => Model.region).Titled("Region");
+        columns.Add(Model => Model.postalCode).Titled("Postal Code");
+        columns.Add(Model => Model.country).Titled("Country");
+        columns.Add(Model => Model.phone).Titled("Phone");
+        columns.Add(Model => Model.fax).Titled("Fax");
+    })
+    .Using(GridFilterMode.Header)
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable(pager => {
+        pager.RowsPerPage = 8;
+    })
+)
+

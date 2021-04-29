@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - webtest1</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/mvc-grid/mvc-grid.css" >
 </head>
 <body>
     <header>
@@ -20,10 +21,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CustomerList">Customer List</a>
                         </li>
@@ -41,6 +39,10 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <script src="~/js/mvc-grid/mvc-grid.js"></script>
+            <script>
+                document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+            </script>
         </main>
     </div>
 

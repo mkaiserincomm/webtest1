@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using webtest1.Data;
 using webtest1.Models;
 
 namespace webtest1.Controllers
@@ -13,10 +15,12 @@ namespace webtest1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
+            _clientFactory = clientFactory;
         }
 
         public IActionResult Index()
@@ -26,7 +30,7 @@ namespace webtest1.Controllers
         
         public IActionResult CustomerList()
         {
-            return View();
+            return View(new CustomerViewModel(_clientFactory));
         }
 
         public IActionResult EmployeeList()
@@ -44,5 +48,6 @@ namespace webtest1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

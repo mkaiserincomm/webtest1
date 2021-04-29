@@ -29,6 +29,8 @@ namespace webtest1
                 .AddCheck<LiveCheck>("live_check", null, new[] { "live" })
                 .AddCheck<ReadyCheck>("ready_check", null, new[] { "ready" })
                 .AddCheck<StartupCheck>("startup_check", null, new[] { "startup" });
+
+            services.AddHttpClient();
                 
             services.AddControllersWithViews();
         }
