@@ -8,6 +8,8 @@
     .Grid(Model.Customers)
     .Build(columns =>
     {
+        columns.Add(Model => $"<button onclick=\"doEdit('{Model.customerId}')\">Edit</button>").Encoded(false);
+        columns.Add(Model => $"<button onclick=\"doDelete('{Model.customerId}')\">Delete</button>").Encoded(false);
         columns.Add(Model => Model.customerId).Titled("Customer Id");
         columns.Add(Model => Model.companyName).Titled("Company Name");
         columns.Add(Model => Model.contactName).Titled("Contact Name");
@@ -28,4 +30,21 @@
         pager.RowsPerPage = 8;
     })
 )
+
+<button onclick="doInsert()">Insert</button>
+
+<script>
+function doEdit(id)
+{
+    window.alert("Edit:"+id);
+}    
+function doDelete(id)
+{
+    window.alert("Delete:"+id);
+}    
+function doInsert(id)
+{
+    window.alert("Insert");
+}    
+</script>
 
