@@ -33,7 +33,7 @@ namespace webtest1.Controllers
         
         public IActionResult CustomerList()
         {
-            return View(new CustomerViewModel(_clientFactory, _configuration));
+            return View(new CustomerViewModel(_clientFactory, _configuration, _logger));
         }
 
         public IActionResult EmployeeList()
