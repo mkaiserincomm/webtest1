@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using webtest1.Data;
 using webtest1.Models;
@@ -16,11 +17,13 @@ namespace webtest1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
         {
             _logger = logger;
             _clientFactory = clientFactory;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -30,7 +33,7 @@ namespace webtest1.Controllers
         
         public IActionResult CustomerList()
         {
-            return View(new CustomerViewModel(_clientFactory));
+            return View(new CustomerViewModel(_clientFactory, _configuration));
         }
 
         public IActionResult EmployeeList()

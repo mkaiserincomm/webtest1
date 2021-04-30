@@ -38,11 +38,11 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: {{.Values.environment}}
-            - name: DOTNET_ConnectionStrings__NorthwindContext
+            - name: DOTNET_url__mssqltest
               valueFrom:
                 secretKeyRef:
-                  name: dbnorthwindconnection
-                  key: connectionstring
+                  name: urlmssqltest
+                  key: url
           ports:
             - name: http
               containerPort: 80
