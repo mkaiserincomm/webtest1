@@ -11,7 +11,7 @@ namespace webtest1.Models
 {
     public class CustomerViewModel
     {        
-        const string url_get_all = "https://mssqltest1.incomm-poc/api/Customer";
+        const string url_get_all = "http://mssqltest1.incomm-poc/api/Customer";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
