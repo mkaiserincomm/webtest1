@@ -11,6 +11,7 @@ namespace webtest1.Models
 {
     public class CustomerViewModel
     {        
+        const string url_get_all = "https://mssqltest1.incomm-poc/api/Customer";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
@@ -29,12 +30,8 @@ namespace webtest1.Models
         public Customer SelectedCustomer {get; set;}    
 
         private async Task<IEnumerable<Customer>> GetCustomers()
-        {            
-            var url = _configuration["url:mssqltest"];
-            _logger.LogInformation("{placeholder}", "********************************");
-            _logger.LogInformation("{url}", url);
-            _logger.LogInformation("{placeholder}", "********************************");
-            var request = new HttpRequestMessage(HttpMethod.Get, url);                        
+        {                    
+            var request = new HttpRequestMessage(HttpMethod.Get, url_get_all);                        
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);            
 

@@ -37,12 +37,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: {{.Values.environment}}
-            - name: DOTNET_url__mssqltest
-              valueFrom:
-                secretKeyRef:
-                  name: urlmssqltest
-                  key: url
+              value: {{.Values.environment}}            
           ports:
             - name: http
               containerPort: 80
