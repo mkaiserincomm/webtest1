@@ -9,27 +9,27 @@ using webtest1.Data;
 
 namespace webtest1.Models
 {
-    public class CustomerViewModel
+    public class CategoryViewModel
     {        
-        const string url_get_all = "http://mssqltest1.incomm-poc/api/Customer";
+        const string url_get_all = "http://mssqltest1.incomm-poc/api/Category";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
-        public CustomerViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger)
+        public CategoryViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger)
         {     
             _clientFactory = clientFactory;
             _configuration = configuration;
             _logger = logger;
 
-            IEnumerable<Customer> result = GetCustomers().Result;
-            this.Customers = result;            
+            IEnumerable<Category> result = GetCategories().Result;
+            this.Categories = result;            
         }
 
-        public IEnumerable<Customer> Customers {get; set;}
-        public Customer SelectedCustomer {get; set;}    
+        public IEnumerable<Category> Categories {get; set;}
+        public Category SelectedCategory {get; set;}    
 
-        private async Task<IEnumerable<Customer>> GetCustomers()
+        private async Task<IEnumerable<Category>> GetCategories()
         {                    
             var request = new HttpRequestMessage(HttpMethod.Get, url_get_all);                        
             var client = _clientFactory.CreateClient();
@@ -38,8 +38,8 @@ namespace webtest1.Models
             if (response.IsSuccessStatusCode)
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
-                var customers = await JsonSerializer.DeserializeAsync<IEnumerable<Customer>>(responseStream);
-                return customers;
+                var categories = await JsonSerializer.DeserializeAsync<IEnumerable<Category>>(responseStream);
+                return categories;
             }  
             else
             {

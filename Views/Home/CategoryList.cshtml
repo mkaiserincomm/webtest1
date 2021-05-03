@@ -1,6 +1,41 @@
+@model CategoryViewModel
 @{
     ViewData["Title"] = "Category List";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>This will display a list of Categories</p>
+@(Html
+    .Grid(Model.Categories)
+    .Build(columns =>
+    {
+        columns.Add(Model => $"<button onclick=\"doEdit('{Model.categoryId}')\">Edit</button>").Encoded(false);
+        columns.Add(Model => $"<button onclick=\"doDelete('{Model.categoryId}')\">Delete</button>").Encoded(false);
+        columns.Add(Model => Model.categoryId).Titled("Category Id");
+        columns.Add(Model => Model.categoryName).Titled("Category Name");
+        columns.Add(Model => Model.description).Titled("Description");        
+    })
+    .Using(GridFilterMode.Header)
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable(pager => {
+        pager.RowsPerPage = 8;
+    })
+)
+
+<button onclick="doInsert()">Insert</button>
+
+<script>
+function doEdit(id)
+{
+    window.alert("Edit:"+id);
+}    
+function doDelete(id)
+{
+    window.alert("Delete:"+id);
+}    
+function doInsert(id)
+{
+    window.alert("Insert");
+}    
+</script>
