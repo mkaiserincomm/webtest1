@@ -38,6 +38,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TAGS: ${{ steps.meta.outputs.tags }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/webtest1-helm
           git config --global user.email "mkaiser@incomm.com"
@@ -47,5 +48,5 @@ jobs:
           mv ./charts/webtest1/values2.yaml ./charts/webtest1/values.yaml
           git add ./charts/webtest1/values.yaml
           git commit -m "Updated build number"
-          git push origin main  
+          git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/webtest1-helm
 
