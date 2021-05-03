@@ -37,10 +37,11 @@ jobs:
       - name: Update the helm chart
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TAGS: ${{ teps.meta.outputs.tags }}
         run: |
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/webtest1-helm
           cd webtest1-helm
-          cat ./charts/webtest1/values.yaml | sed 's/tag: \"latest\"/tag: \"\${{ steps.meta.outputs.tags }}"/' > ./charts/webtest1/values2.yaml
+          cat ./charts/webtest1/values.yaml | sed 's/tag: \"latest\"/tag: \"$GITHUB_TAGS\"/' > ./charts/webtest1/values2.yaml
           mv ./charts/webtest1/values2.yaml ./charts/webtest1/values.yaml
           git commit -m "Updated build number"
           git push
