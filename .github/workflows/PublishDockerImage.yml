@@ -37,7 +37,7 @@ jobs:
       - name: Update the helm chart
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TAGS: ${{ teps.meta.outputs.tags }}
+          GITHUB_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/webtest1-helm
           cd webtest1-helm
