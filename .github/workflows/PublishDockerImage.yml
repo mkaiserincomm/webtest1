@@ -44,7 +44,7 @@ jobs:
           git config --global user.email "mkaiser@incomm.com"
           git config --global user.name "Michael Kaiser"
           cd webtest1-helm
-          cat ./charts/webtest1/values.yaml | sed 's/tag: \"latest\"/tag: \"$GITHUB_TAGS\"/' > ./charts/webtest1/values2.yaml
+          cat ./charts/webtest1/values.yaml | sed 's/tag: \"latest\"/tag: \"'$GITHUB_TAGS'\"/' > ./charts/webtest1/values2.yaml
           mv ./charts/webtest1/values2.yaml ./charts/webtest1/values.yaml
           git add ./charts/webtest1/values.yaml
           git commit -m "Updated build number"
