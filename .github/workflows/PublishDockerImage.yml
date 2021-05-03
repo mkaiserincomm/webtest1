@@ -41,7 +41,7 @@ jobs:
           git config --global user.email "mkaiser@incomm.com"
           git config --global user.name "Michael Kaiser"
           cd webtest1-helm
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values2.yaml          
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml          
           git add ./charts/webtest1/values.yaml
           git commit -m "Updated build number"
           git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/webtest1-helm
