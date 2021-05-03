@@ -36,6 +36,7 @@ jobs:
           GITHUB_TAGS: ${{ steps.meta.outputs.tags }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
+          echo $GITHUB_TAGS
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/webtest1-helm
           git config --global user.email "mkaiser@incomm.com"
           git config --global user.name "Michael Kaiser"
