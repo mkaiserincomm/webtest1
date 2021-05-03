@@ -47,5 +47,5 @@ jobs:
           mv ./charts/webtest1/values2.yaml ./charts/webtest1/values.yaml
           git add ./charts/webtest1/values.yaml
           git commit -m "Updated build number"
-          git push
+          git push origin main  
 
