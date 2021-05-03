@@ -7,11 +7,7 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    steps:
-      - name: Output Run ID
-        run: echo ${{ github.run_id }}
-      - name: Output Run Number
-        run: echo ${{ github.run_number }}
+    steps:      
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Docker meta
@@ -37,5 +33,15 @@ jobs:
           context: .
           push: true          
           tags:   ${{ steps.meta.outputs.tags }} 
-          labels: ${{ steps.meta.outputs.labels }}    
+          labels: ${{ steps.meta.outputs.labels }}  
+      - name: Generate API module
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone https://user:$GITHUB_TOKEN@github.com/mgkaiser/webtest1-helm
+          cd webtest1-helm
+          cat ./charts/webtest1/values.yaml | sed 's/tag: \"latest\"/tag: \"\${{ steps.meta.outputs.tags }}"/' > ./charts/webtest1/values2.yaml
+          mv ./charts/webtest1/values2.yaml ./charts/webtest1/values.yaml
+          git commit -m "Updated build number"
+          git push
 
