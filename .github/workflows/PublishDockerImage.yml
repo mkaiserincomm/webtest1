@@ -15,13 +15,9 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           # list of Docker images to use as base name for tags
-          images: mgkaiser/webtest1
-          # generate Docker tags based on the following events/attributes
-          flavor: |
-            latest=true
-          tags: |
-            type=sha
-            type=raw,enable=true,prefix=Build-,value=${{ github.run_number }}
+          images: mgkaiser/webtest1          
+          flavor: latest=false
+          tags: type=raw,enable=true,prefix=Build-,value=${{ github.run_number }}
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
