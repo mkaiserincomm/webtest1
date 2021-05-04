@@ -5941,6 +5941,12 @@ a.close.disabled {
   }
 }
 
+@media (min-width: 1900px) {
+  .modal-xl {
+    max-width: 1800px;
+  }
+}
+
 .tooltip {
   position: absolute;
   z-index: 1070;
