@@ -14,7 +14,7 @@ WORKDIR "/src/."
 RUN dotnet build "webtest1.csproj" -c Release -o /app/build --version-suffix $version-suffix
 
 FROM build AS publish
-RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish
+RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix $version-suffix
 
 FROM base AS final
 WORKDIR /app
