@@ -10,7 +10,7 @@ namespace webtest1.Models
 {
     public class AboutViewModel
     {
-        const string url_get = "http://mssqltest1.incomm-poc/api/Version";
+        const string url_get = "http://mssqltest1.incomm-poc/api/Version";        
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
@@ -40,8 +40,8 @@ namespace webtest1.Models
 
             if (response.IsSuccessStatusCode)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                var version = await JsonSerializer.DeserializeAsync<string>(responseStream);
+                using var responseStream = await response.Content.ReadAsStreamAsync();                
+                var version = responseStream.ToString();
                 return version;
             }  
             else
