@@ -3,7 +3,7 @@ WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://*:80
 
-RUN echo "Version $VERSION"
+RUN echo "version-suffix=${version-suffix}"
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
