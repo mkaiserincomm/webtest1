@@ -53,7 +53,7 @@ namespace webtest1.Controllers
 
         public IActionResult About()
         {            
-            return View(new AboutViewModel());
+            return View(new AboutViewModel(_clientFactory, _configuration, _logger));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
