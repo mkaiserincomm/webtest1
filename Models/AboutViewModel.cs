@@ -7,7 +7,7 @@ namespace webtest1.Models
     {
         public string Version { 
             get {
-                return Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyVersionAttribute>().Version;
+                return Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             }
         }
     }
