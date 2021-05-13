@@ -51,6 +51,11 @@ namespace webtest1.Controllers
             return View(new CategoryViewModel(_clientFactory, _configuration, _logger));;
         }
 
+        public IActionResult About()
+        {            
+            return View(new AboutViewModel());
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
