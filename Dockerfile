@@ -11,10 +11,10 @@ COPY ["webtest1.csproj", "./"]
 RUN dotnet restore "webtest1.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "webtest1.csproj" -c Release -o /app/build --version-suffix $version-suffix
+RUN dotnet build "webtest1.csproj" -c Release -o /app/build --version-suffix ${version-suffix}
 
 FROM build AS publish
-RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix $version-suffix
+RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix ${version-suffix}
 
 FROM base AS final
 WORKDIR /app
