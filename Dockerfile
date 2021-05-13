@@ -3,13 +3,15 @@ WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://*:80
 
+RUN echo "Version $VERSION"
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["webtest1.csproj", "./"]
 RUN dotnet restore "webtest1.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build /p:Version=${Version} "webtest1.csproj" -c Release -o /app/build
+RUN dotnet build "webtest1.csproj" -c Release -o /app/build --version-suffix $VERSION
 
 FROM build AS publish
 RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish
