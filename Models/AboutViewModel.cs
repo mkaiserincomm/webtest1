@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -40,8 +42,9 @@ namespace webtest1.Models
 
             if (response.IsSuccessStatusCode)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();                
-                var version = responseStream.ToString();
+                using var responseStream = await response.Content.ReadAsStreamAsync();      
+                using var sr = new StreamReader(responseStream);
+                var version = await sr.ReadToEndAsync();
                 return version;
             }  
             else
