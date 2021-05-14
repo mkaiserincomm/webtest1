@@ -1,6 +1,50 @@
+@model ProductViewModel
 @{
     ViewData["Title"] = "Product List";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>This will display a list of Products</p>
+@(Html
+    .Grid(Model.Products)
+    .Build(columns =>
+    {
+        columns.Add(Model => $"<button onclick=\"doEdit('{Model.productId}')\">Edit</button>").Encoded(false);
+        columns.Add(Model => $"<button onclick=\"doDelete('{Model.productId}')\">Delete</button>").Encoded(false);
+        columns.Add(Model => Model.productId).Titled("Product Id");
+        columns.Add(Model => Model.productName).Titled("Product Name");
+        columns.Add(Model => Model.supplierId).Titled("Supplier Id");
+        columns.Add(Model => Model.categoryId).Titled("Category Id");
+        columns.Add(Model => Model.quantityPerUnit).Titled("Qty/Unit");
+        columns.Add(Model => Model.unitPrice).Titled("Unit Price");
+        columns.Add(Model => Model.unitsInStock).Titled("In Stock");
+        columns.Add(Model => Model.unitsOnOrder).Titled("On Order");
+        columns.Add(Model => Model.reorderLevel).Titled("Reorder Level");
+        columns.Add(Model => Model.discontinued).Titled("Discontinued");
+        
+    })
+    .Using(GridFilterMode.Header)
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable(pager => {
+        pager.RowsPerPage = 8;
+    })
+)
+
+<button onclick="doInsert()">Insert</button>
+
+<script>
+function doEdit(id)
+{
+    window.alert("Edit:"+id);
+}    
+function doDelete(id)
+{
+    window.alert("Delete:"+id);
+}    
+function doInsert(id)
+{
+    window.alert("Insert");
+}    
+</script>
+

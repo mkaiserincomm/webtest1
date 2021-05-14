@@ -43,12 +43,12 @@ namespace webtest1.Controllers
 
         public IActionResult ProductList()
         {
-            return View();
+            return View(new ProductViewModel(_clientFactory, _configuration, _logger));
         }
 
         public IActionResult CategoryList()
         {
-            return View(new CategoryViewModel(_clientFactory, _configuration, _logger));;
+            return View(new CategoryViewModel(_clientFactory, _configuration, _logger));
         }
 
         public IActionResult About()
