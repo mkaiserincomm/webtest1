@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 using webtest1.Controllers;
 
 namespace webtest1
@@ -64,6 +65,8 @@ namespace webtest1
                 endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("ready")});
                 endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("startup")});
             });
+
+            app.UseMetricServer();
         }
     }
 }
