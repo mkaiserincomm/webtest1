@@ -1,11 +1,11 @@
-@model CategoryViewModel
+@model DataViewModel<Category>
 @{
     ViewData["Title"] = "Category List";
 }
 <h1>@ViewData["Title"]</h1>
 
 @(Html
-    .Grid(Model.Categories)
+    .Grid(Model.Data)
     .Build(columns =>
     {
         columns.Add(Model => $"<button onclick=\"doEdit('{Model.categoryId}')\">Edit</button>").Encoded(false);

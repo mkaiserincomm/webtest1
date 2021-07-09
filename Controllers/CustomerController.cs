@@ -15,6 +15,7 @@ namespace webtest1.Controllers
 {
     public class CustomerController : Controller
     {
+        const string url_get_all = "http://mssqltest1.incomm-poc/api/Customer";
         private readonly ILogger<CustomerController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
@@ -28,12 +29,12 @@ namespace webtest1.Controllers
 
         public IActionResult Index()
         {            
-            return View(new CustomerViewModel(_clientFactory, _configuration, _logger));
+            return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
         }
         
         public IActionResult CustomerList()
         {
-            return View(new CustomerViewModel(_clientFactory, _configuration, _logger));
+            return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
         }
         
     }

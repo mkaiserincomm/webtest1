@@ -1,11 +1,11 @@
-@model ProductViewModel
+@model DataViewModel<Product>
 @{
     ViewData["Title"] = "Product List";
 }
 <h1>@ViewData["Title"]</h1>
 
 @(Html
-    .Grid(Model.Products)
+    .Grid(Model.Data)
     .Build(columns =>
     {
         columns.Add(Model => $"<button onclick=\"doEdit('{Model.productId}')\">Edit</button>").Encoded(false);

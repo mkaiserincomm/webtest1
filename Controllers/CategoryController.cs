@@ -13,13 +13,14 @@ using webtest1.Models;
 
 namespace webtest1.Controllers
 {
-    public class HomeController : Controller
+    public class CategoryController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        const string url_get_all = "http://mssqltest1.incomm-poc/api/Category";
+        private readonly ILogger<CategoryController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
+        public CategoryController(ILogger<CategoryController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
         {
             _logger = logger;
             _clientFactory = clientFactory;
@@ -28,13 +29,12 @@ namespace webtest1.Controllers
 
         public IActionResult Index()
         {            
-            return View();
-        }                                
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+            return View(new DataViewModel<Category>(_clientFactory, _configuration, _logger, url_get_all));
+        }
+                
+        public IActionResult CategoryList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new DataViewModel<Category>(_clientFactory, _configuration, _logger, url_get_all));
         }
         
     }
