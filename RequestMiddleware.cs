@@ -23,10 +23,9 @@ public class RequestMiddleware
     public async Task Invoke(HttpContext httpContext)  
     {  
         var path = httpContext.Request.Path.Value;  
-        var method = httpContext.Request.Method;  
-  
-        var statusCounter = Metrics.CreateCounter("http_request_count", "HTTP Request Status Count", new CounterConfiguration { LabelNames = new[] { "path", "method"} });          
-        var elapsedMsCounter = Metrics.CreateCounter("http_request_elapsedms", "HTTP Request Elapsed Ms", new CounterConfiguration { LabelNames = new[] { "path", "method"} });  
+        var method = httpContext.Request.Method;    
+        var statusCounter = Metrics.CreateGauge("http_request_count", "HTTP Request Status Count", new GaugeConfiguration { LabelNames = new[] { "path", "method"} });          
+        var elapsedMsCounter = Metrics.CreateGauge("http_request_elapsedms", "HTTP Request Elapsed Ms", new GaugeConfiguration { LabelNames = new[] { "path", "method"} });  
   
         var statusCode = 200;          
   
@@ -40,8 +39,8 @@ public class RequestMiddleware
         {              
             stopwatch.Stop(); 
             statusCode = 500;  
-            statusCounter.Labels(path, method).IncTo(statusCode);  
-            elapsedMsCounter.Labels(path, method).IncTo(stopwatch.ElapsedMilliseconds);
+            statusCounter.Labels(path, method).Set(statusCode);
+            elapsedMsCounter.Labels(path, method).Set(stopwatch.ElapsedMilliseconds);
   
             throw;  
         }  
@@ -49,8 +48,8 @@ public class RequestMiddleware
         if (path != "/metrics")  
         {  
             statusCode = httpContext.Response.StatusCode;  
-            statusCounter.Labels(path, method).IncTo(statusCode);  
-            elapsedMsCounter.Labels(path, method).IncTo(stopwatch.ElapsedMilliseconds);
+            statusCounter.Labels(path, method).Set(statusCode);
+            elapsedMsCounter.Labels(path, method).Set(stopwatch.ElapsedMilliseconds);
         }  
     }  
 }  
