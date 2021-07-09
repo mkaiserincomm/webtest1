@@ -67,6 +67,7 @@ namespace webtest1
             });
 
             app.UseMetricServer();
+            app.UseRequestMiddleware();
         }
     }
 }
