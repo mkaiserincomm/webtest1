@@ -39,6 +39,9 @@ namespace webtest1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMetricServer();
+            app.UseRequestMiddleware();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,10 +67,7 @@ namespace webtest1
                 endpoints.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("live")});
                 endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("ready")});
                 endpoints.MapHealthChecks("/health/startup", new HealthCheckOptions() { Predicate = p => p.Tags.Contains("startup")});
-            });
-
-            app.UseMetricServer();
-            app.UseRequestMiddleware();
+            });            
         }
     }
 }

@@ -25,10 +25,8 @@ public class RequestMiddleware
         var path = httpContext.Request.Path.Value;  
         var method = httpContext.Request.Method;  
   
-        var counter = Metrics.CreateCounter("http_request_stats", "HTTP Request Statistics", new CounterConfiguration  
-        {  
-            LabelNames = new[] { "path", "method", "status", "elapsedms" }  
-        });  
+        var statusCounter = Metrics.CreateCounter("http_request_count", "HTTP Request Status Count", new CounterConfiguration { LabelNames = new[] { "path", "method"} });          
+        var elapsedMsCounter = Metrics.CreateCounter("http_request_elapsedms", "HTTP Request Elapsed Ms", new CounterConfiguration { LabelNames = new[] { "path", "method"} });  
   
         var statusCode = 200;          
   
@@ -39,10 +37,11 @@ public class RequestMiddleware
             stopwatch.Stop(); 
         }  
         catch (Exception)  
-        {  
+        {              
             stopwatch.Stop(); 
             statusCode = 500;  
-            counter.Labels(path, method, statusCode.ToString(), stopwatch.ElapsedMilliseconds.ToString()).Inc();  
+            statusCounter.Labels(path, method).IncTo(statusCode);  
+            elapsedMsCounter.Labels(path, method).IncTo(stopwatch.ElapsedMilliseconds);
   
             throw;  
         }  
@@ -50,7 +49,8 @@ public class RequestMiddleware
         if (path != "/metrics")  
         {  
             statusCode = httpContext.Response.StatusCode;  
-            counter.Labels(path, method, statusCode.ToString(), stopwatch.ElapsedMilliseconds.ToString()).Inc();  
+            statusCounter.Labels(path, method).IncTo(statusCode);  
+            elapsedMsCounter.Labels(path, method).IncTo(stopwatch.ElapsedMilliseconds);
         }  
     }  
 }  
