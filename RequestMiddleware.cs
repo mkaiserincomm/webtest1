@@ -42,7 +42,8 @@ namespace webtest1
                 stopwatch.Stop(); 
                 statusCode = 500;  
                 statusCounter.Labels(path, method, statusCode.ToString()).Inc();
-                elapsedMsCounter.Labels(path, method).Inc();
+                var elapsedMs = elapsedMsCounter.Labels(path, method)
+                elapsedMs.IncTo(elapsedMs.Value + stopwatch.ElapsedMilliseconds);
     
                 throw;  
             }  
@@ -51,7 +52,8 @@ namespace webtest1
             {  
                 statusCode = httpContext.Response.StatusCode;  
                 statusCounter.Labels(path, method, statusCode.ToString()).Inc();
-                elapsedMsCounter.Labels(path, method).Inc();
+                var elapsedMs = elapsedMsCounter.Labels(path, method)
+                elapsedMs.IncTo(elapsedMs.Value + stopwatch.ElapsedMilliseconds);
             }  
         }  
     }  
