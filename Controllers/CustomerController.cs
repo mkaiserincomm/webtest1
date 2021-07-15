@@ -39,7 +39,21 @@ namespace webtest1.Controllers
 
         public IActionResult GetCustomer(DataViewModel<Customer> customer)
         {
-            return View("CustomerEdit", customer);
+            switch (customer.Action)
+            {
+                case "edit":
+                    return View("CustomerEdit", customer);
+                    
+                case "insert":
+                    return View("CustomerInsert", customer);
+
+                case "delete":
+                    return View("CustomerDelete", customer);
+
+                default:
+                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
+            }
+            
         }        
         
     }
