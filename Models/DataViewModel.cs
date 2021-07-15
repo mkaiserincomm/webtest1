@@ -17,6 +17,11 @@ namespace webtest1.Models
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
+        public DataViewModel()
+        {
+            
+        }
+
         public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger)
         {     
             _clientFactory = clientFactory;
