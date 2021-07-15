@@ -43,11 +43,11 @@ namespace webtest1.Controllers
             {
                 case "updatedata":
                     // Save the data
-                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                     
+                    return View("CustomerList",new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                     
 
                 case "insertdata":
                     // Insert the data
-                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));   
+                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));   
 
                 case "deletedata":
                     // Delete the data
@@ -63,7 +63,7 @@ namespace webtest1.Controllers
                     return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
 
                 default:
-                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
+                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
             }
             
         }       

@@ -48,8 +48,8 @@ namespace webtest1.Models
             _logger = logger;
             _url_get_all = url_get_all;
 
-            IEnumerable<T> result = Get().Result;
-            this.Data = result;            
+            T result = Get(id).Result;
+            this.Current= result;            
         }
 
         public IEnumerable<T> Data {get; set;}
