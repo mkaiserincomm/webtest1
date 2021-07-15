@@ -1,0 +1,11 @@
+@using webtest1.Controllers
+@model DataViewModel<Customer>
+@{
+    ViewData["Title"] = "Customer Edit";
+}
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("GetCustomer", "Customer", FormMethod.Post))
+{
+    
+}

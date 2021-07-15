@@ -39,7 +39,7 @@ namespace webtest1.Controllers
 
         public IActionResult GetCustomer(DataViewModel<Customer> customer)
         {
-            return View(customer);
+            return View("CustomerEdit", customer);
         }        
         
     }
