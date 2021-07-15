@@ -36,6 +36,11 @@ namespace webtest1.Controllers
         {
             return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
         }
+
+        public IActionResult GetCustomer(DataViewModel<Customer> customer)
+        {
+            return View(customer);
+        }        
         
     }
 }

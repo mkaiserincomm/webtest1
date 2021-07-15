@@ -1,50 +1,57 @@
+@using webtest1.Controllers
 @model DataViewModel<Customer>
 @{
     ViewData["Title"] = "Customer List";
 }
 <h1>@ViewData["Title"]</h1>
 
-@(Html
-    .Grid(Model.Data)
-    .Build(columns =>
+@using (Html.BeginForm("GetCustomer", "Customer", FormMethod.Post))
+{
+    @(Html
+        .Grid(Model.Data)
+        .Build(columns =>
+        {
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.customerId}')\">Edit</button>").Encoded(false);
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.customerId}')\">Delete</button>").Encoded(false);
+            columns.Add(Model => Model.customerId).Titled("Customer Id");
+            columns.Add(Model => Model.companyName).Titled("Company Name");
+            columns.Add(Model => Model.contactName).Titled("Contact Name");
+            columns.Add(Model => Model.contactTitle).Titled("Contact Title");
+            columns.Add(Model => Model.address).Titled("Address");
+            columns.Add(Model => Model.city).Titled("City");
+            columns.Add(Model => Model.region).Titled("Region");
+            columns.Add(Model => Model.postalCode).Titled("Postal Code");
+            columns.Add(Model => Model.country).Titled("Country");
+            columns.Add(Model => Model.phone).Titled("Phone");
+            columns.Add(Model => Model.fax).Titled("Fax");
+        })
+        .Using(GridFilterMode.Header)
+        .Empty("No data found")
+        .Filterable()
+        .Sortable()
+        .Pageable(pager => {
+            pager.RowsPerPage = 8;
+        })
+    )
+
+    <button type="submit" onclick="doInsert()">Insert</button>
+    
+    <script>
+    function doEdit(id)
     {
-        columns.Add(Model => $"<button onclick=\"doEdit('{Model.customerId}')\">Edit</button>").Encoded(false);
-        columns.Add(Model => $"<button onclick=\"doDelete('{Model.customerId}')\">Delete</button>").Encoded(false);
-        columns.Add(Model => Model.customerId).Titled("Customer Id");
-        columns.Add(Model => Model.companyName).Titled("Company Name");
-        columns.Add(Model => Model.contactName).Titled("Contact Name");
-        columns.Add(Model => Model.contactTitle).Titled("Contact Title");
-        columns.Add(Model => Model.address).Titled("Address");
-        columns.Add(Model => Model.city).Titled("City");
-        columns.Add(Model => Model.region).Titled("Region");
-        columns.Add(Model => Model.postalCode).Titled("Postal Code");
-        columns.Add(Model => Model.country).Titled("Country");
-        columns.Add(Model => Model.phone).Titled("Phone");
-        columns.Add(Model => Model.fax).Titled("Fax");
-    })
-    .Using(GridFilterMode.Header)
-    .Empty("No data found")
-    .Filterable()
-    .Sortable()
-    .Pageable(pager => {
-        pager.RowsPerPage = 8;
-    })
-)
-
-<button onclick="doInsert()">Insert</button>
-
-<script>
-function doEdit(id)
-{
-    window.alert("Edit:"+id);
-}    
-function doDelete(id)
-{
-    window.alert("Delete:"+id);
-}    
-function doInsert(id)
-{
-    window.alert("Insert");
-}    
-</script>
-
+        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Action = "edit";
+    }
+    
+    function doDelete(id)
+    {
+        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Action = "delete";
+    }    
+    function doInsert(id)
+    {
+        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Action = "insert";
+    }    
+    </script>
+}

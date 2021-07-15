@@ -36,6 +36,11 @@ namespace webtest1.Controllers
         public IActionResult EmployeeList()
         {
             return View(new DataViewModel<Employee>(_clientFactory, _configuration, _logger, url_get_all));
+        }
+
+        public IActionResult GetEmployee(DataViewModel<Employee> employee)
+        {
+            return View(employee);
         }        
         
     }

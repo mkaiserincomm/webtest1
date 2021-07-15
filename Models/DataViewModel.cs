@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using webtest1.Data;
@@ -30,6 +31,8 @@ namespace webtest1.Models
         public IEnumerable<T> Data {get; set;}
         public T Current {get; set;}    
 
+        public string Action {get; set;}
+
         private async Task<IEnumerable<T>> Get()
         {                    
             var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all);                        
@@ -47,5 +50,14 @@ namespace webtest1.Models
                 return null;
             }          
         }
+
+        /*
+        private async Task<IActionResult> Get()
+        {
+        
+        }
+        */
     }
+
+    
 }
