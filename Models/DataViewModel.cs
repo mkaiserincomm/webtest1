@@ -17,12 +17,26 @@ namespace webtest1.Models
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
-        public DataViewModel()
-        {
-            
+        public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger)
+        {     
+            _clientFactory = clientFactory;
+            _configuration = configuration;
+            _logger = logger;
+            _url_get_all = "";
         }
 
         public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger, string url_get_all)
+        {     
+            _clientFactory = clientFactory;
+            _configuration = configuration;
+            _logger = logger;
+            _url_get_all = url_get_all;
+
+            IEnumerable<T> result = Get().Result;
+            this.Data = result;            
+        }
+
+        public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger, string url_get_all, string id)
         {     
             _clientFactory = clientFactory;
             _configuration = configuration;
@@ -37,6 +51,7 @@ namespace webtest1.Models
         public T Current {get; set;}    
 
         public string Action {get; set;}
+        public string Id {get; set;}
 
         private async Task<IEnumerable<T>> Get()
         {                    
@@ -56,12 +71,23 @@ namespace webtest1.Models
             }          
         }
 
-        /*
-        private async Task<IActionResult> Get()
-        {
-        
+        private async Task<T> Get(string id)
+        {                    
+            var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all + "/" + id);                        
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);            
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<T>(responseStream);
+                return result;
+            }  
+            else
+            {
+                return default;
+            }          
         }
-        */
     }
 
     

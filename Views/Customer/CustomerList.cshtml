@@ -11,8 +11,8 @@
         .Grid(Model.Data)
         .Build(columns =>
         {
-            columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.customerId}')\">Edit</button>").Encoded(false);
-            columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.customerId}')\">Delete</button>").Encoded(false);
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.customerId}');\">Edit</button>").Encoded(false);
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.customerId};')\">Delete</button>").Encoded(false);
             columns.Add(Model => Model.customerId).Titled("Customer Id");
             columns.Add(Model => Model.companyName).Titled("Company Name");
             columns.Add(Model => Model.contactName).Titled("Contact Name");
@@ -34,23 +34,26 @@
         })
     )
 
-    <button type="submit" onclick="doInsert()">Insert</button>
+    <button type="button" onclick="doInsert();">Insert</button>
+
+    @Html.HiddenFor(Model => Model.Id);
+    @Html.HiddenFor(Model => Model.Action);
     
     <script>
     function doEdit(id)
     {
-        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Id = id;
         Model.Action = "edit";
     }
     
     function doDelete(id)
     {
-        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Id = id;
         Model.Action = "delete";
     }    
     function doInsert(id)
     {
-        Model.Current = Model.Data.Where(Model => Model.customerId == id);
+        Model.Id = id;
         Model.Action = "insert";
     }    
     </script>
