@@ -7,5 +7,29 @@
 
 @using (Html.BeginForm("GetCustomer", "Customer", FormMethod.Post))
 {
+    @Html.HiddenFor(Model => Model.Id);
+    @Html.HiddenFor(Model => Model.Action);
     
+    @Html.HiddenFor(Model => Model.Current.customerId);
+
+    @Html.LabelFor(Model => Model.Current.companyName);
+    @Html.TextBoxFor(Model => Model.Current.companyName);
+
+
+    <button type="submit" onclick="doUpdate();">Update</button>
+    <button type="submit" onclick="doCancel();">Cancel</button>
 }
+
+<script>
+    function doUpdate()
+    {        
+        $("#Action").val("updatedata");   
+        $("#Id").val($("#customerId").val());     
+    }
+    
+    function doCancel()
+    {
+        $("#Action").val("cancel");          
+        $("#Id").val($("#customerId").val());       
+    }
+</script>

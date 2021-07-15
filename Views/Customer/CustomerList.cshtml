@@ -13,8 +13,8 @@
         {
             columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.customerId}');\">Edit</button>").Encoded(false);
             columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.customerId};')\">Delete</button>").Encoded(false);
-            columns.Add(Model => Model.customerId).Titled("Customer Id");
-            columns.Add(Model => Model.companyName).Titled("Company Name");
+            columns.Add(Model => Model.customerId);
+            columns.Add(Model => Model.companyName);
             columns.Add(Model => Model.contactName).Titled("Contact Name");
             columns.Add(Model => Model.contactTitle).Titled("Contact Title");
             columns.Add(Model => Model.address).Titled("Address");
@@ -34,7 +34,7 @@
         })
     )
 
-    <button onclick="doInsert();">Insert</button>
+    <button type="submit" onclick="doInsert();">Insert</button>
 
     @Html.HiddenFor(Model => Model.Current);
     @Html.HiddenFor(Model => Model.Id);

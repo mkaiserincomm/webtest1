@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace webtest1.Data
 {    
     public class Customer 
     {
+        [Display(Name ="Customer Id")]
         public string customerId {get; set;}
-        public string companyName {get; set;}
+        [Display(Name ="Company Name")]
+        public string companyName {get; set;}        
         public string contactName {get; set;}
         public string contactTitle {get; set;}
         public string address {get; set;}

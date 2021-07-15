@@ -42,13 +42,16 @@ namespace webtest1.Controllers
             switch (customer.Action)
             {
                 case "updatedata":
-                    return null;                    
-                    
+                    // Save the data
+                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                     
+
                 case "insertdata":
-                    return null;
+                    // Insert the data
+                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));   
 
                 case "deletedata":
-                    return null;
+                    // Delete the data
+                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
 
                 case "edit":
                     return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
@@ -63,7 +66,7 @@ namespace webtest1.Controllers
                     return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
             }
             
-        }        
+        }       
         
     }
 }
