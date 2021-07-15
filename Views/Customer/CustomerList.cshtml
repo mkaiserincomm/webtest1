@@ -42,21 +42,21 @@
     
     <script>
     function doEdit(id)
-    {
-        Model.Id = id;
-        Model.Action = "edit";        
+    {        
+        $("#Action").val("edit");
+        $("#Id").val(id);     
     }
     
     function doDelete(id)
     {
-        Model.Id = id;
-        Model.Action = "delete";    
+        $("#Action").val("delete");
+        $("#Id").val(id);       
     }
-        
+
     function doInsert(id)
     {
-        Model.Id = id;
-        Model.Action = "insert";        
+        $("#Action").val("insert");
+        $("#Id").val(id);             
     }    
     </script>
 }
