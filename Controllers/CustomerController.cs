@@ -37,18 +37,27 @@ namespace webtest1.Controllers
             return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
         }
 
-        public IActionResult GetCustomer(string Action, string Id)
+        public IActionResult GetCustomer(DataViewModel<Customer> customer)
         {
-            switch (Action)
+            switch (customer.Action)
             {
+                case "updatedata":
+                    return null;                    
+                    
+                case "insertdata":
+                    return null;
+
+                case "deletedata":
+                    return null;
+
                 case "edit":
-                    return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, Id));
+                    return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
                     
                 case "insert":
                     return View("CustomerInsert", new DataViewModel<Customer>(_clientFactory, _configuration, _logger));
 
                 case "delete":
-                    return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, Id));
+                    return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
 
                 default:
                     return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
