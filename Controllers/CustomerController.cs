@@ -15,7 +15,7 @@ namespace webtest1.Controllers
 {
     public class CustomerController : Controller
     {
-        const string url_get_all = "http://mssqltest1.incomm-poc/api/Customer";
+        private readonly string _url_get_all;
         private readonly ILogger<CustomerController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
@@ -25,16 +25,17 @@ namespace webtest1.Controllers
             _logger = logger;
             _clientFactory = clientFactory;
             _configuration = configuration;
+            _url_get_all = _configuration.GetValue<string>("DAL:Customer");
         }
 
         public IActionResult Index()
         {            
-            return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
+            return View(new DataViewModel<Customer>(_clientFactory,  _logger, _url_get_all));
         }
         
         public IActionResult CustomerList()
         {
-            return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));
+            return View(new DataViewModel<Customer>(_clientFactory,  _logger, _url_get_all));
         }
 
         public IActionResult GetCustomer(DataViewModel<Customer> customer)
@@ -43,27 +44,27 @@ namespace webtest1.Controllers
             {
                 case "updatedata":
                     // Save the data
-                    return View("CustomerList",new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                     
+                    return View("CustomerList",new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                     
 
                 case "insertdata":
                     // Insert the data
-                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));   
+                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));   
 
                 case "deletedata":
                     // Delete the data
-                    return View(new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
+                    return View(new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                    
 
                 case "edit":
-                    return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
+                    return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, customer.Id));
                     
                 case "insert":
-                    return View("CustomerInsert", new DataViewModel<Customer>(_clientFactory, _configuration, _logger));
+                    return View("CustomerInsert", new DataViewModel<Customer>(_clientFactory,  _logger));
 
                 case "delete":
-                    return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all, customer.Id));
+                    return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, customer.Id));
 
                 default:
-                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _configuration, _logger, url_get_all));                    
+                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                    
             }
             
         }       

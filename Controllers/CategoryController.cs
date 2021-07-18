@@ -15,7 +15,7 @@ namespace webtest1.Controllers
 {
     public class CategoryController : Controller
     {
-        const string url_get_all = "http://mssqltest1.incomm-poc/api/Category";
+        private readonly string _url_get_all;
         private readonly ILogger<CategoryController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
@@ -25,16 +25,17 @@ namespace webtest1.Controllers
             _logger = logger;
             _clientFactory = clientFactory;
             _configuration = configuration;
+            _url_get_all = _configuration.GetValue<string>("DAL:Category");
         }
 
         public IActionResult Index()
         {            
-            return View(new DataViewModel<Category>(_clientFactory, _configuration, _logger, url_get_all));
+            return View(new DataViewModel<Category>(_clientFactory, _logger, _url_get_all));
         }
                 
         public IActionResult CategoryList()
         {
-            return View(new DataViewModel<Category>(_clientFactory, _configuration, _logger, url_get_all));
+            return View(new DataViewModel<Category>(_clientFactory, _logger, _url_get_all));
         }
         
     }

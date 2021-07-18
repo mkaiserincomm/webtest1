@@ -13,8 +13,7 @@ namespace webtest1.Models
     public class DataViewModel<T>
     {        
         private readonly string _url_get_all;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+        private readonly IHttpClientFactory _clientFactory;        
         private readonly ILogger _logger;
 
         public DataViewModel()
@@ -22,18 +21,16 @@ namespace webtest1.Models
             
         }
 
-        public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger)
+        public DataViewModel(IHttpClientFactory clientFactory, ILogger logger)
         {     
             _clientFactory = clientFactory;
-            _configuration = configuration;
             _logger = logger;
             _url_get_all = "";
         }
 
-        public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger, string url_get_all)
+        public DataViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all)
         {     
-            _clientFactory = clientFactory;
-            _configuration = configuration;
+            _clientFactory = clientFactory;            
             _logger = logger;
             _url_get_all = url_get_all;
 
@@ -41,10 +38,9 @@ namespace webtest1.Models
             this.Data = result;            
         }
 
-        public DataViewModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger logger, string url_get_all, string id)
+        public DataViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all, string id)
         {     
-            _clientFactory = clientFactory;
-            _configuration = configuration;
+            _clientFactory = clientFactory;    
             _logger = logger;
             _url_get_all = url_get_all;
 
