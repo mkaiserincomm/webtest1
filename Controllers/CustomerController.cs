@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -30,44 +24,69 @@ namespace webtest1.Controllers
 
         public IActionResult Index()
         {            
-            return View(new DataViewModel<Customer>(_clientFactory,  _logger, _url_get_all));
+            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
         }
         
         public IActionResult CustomerList()
         {
-            return View(new DataViewModel<Customer>(_clientFactory,  _logger, _url_get_all));
+            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
         }
 
-        public IActionResult GetCustomer(DataViewModel<Customer> customer)
+        public IActionResult GetCustomer(DataViewModel<Customer> model)
         {
-            switch (customer.Action)
+            switch (model.Action)
             {
-                case "updatedata":
-                    // Save the data
-                    return View("CustomerList",new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                     
-
-                case "insertdata":
-                    // Insert the data
-                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));   
-
-                case "deletedata":
-                    // Delete the data
-                    return View(new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                    
-
+                case "updatedata":                                        
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    if (ModelState.IsValid && model.Put().Result)
+                    {                                            
+                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
+                    }
+                    else
+                    {
+                        return View("Edit", model);                                
+                    }
+                    
+                case "insertdata":                    
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    if (ModelState.IsValid && model.Post().Result)                                                
+                    {
+                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
+                    }
+                    else
+                    {
+                        return View("Insert", model);                                
+                    }                    
+                
                 case "edit":
-                    return View("CustomerEdit", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, customer.Id));
+                    return View("Edit", NewViewModel(_clientFactory, _logger, _url_get_all, model.Id));
                     
                 case "insert":
-                    return View("CustomerInsert", new DataViewModel<Customer>(_clientFactory,  _logger));
+                    return View("Insert", NewViewModel(_clientFactory,  _logger));
 
-                case "delete":
-                    return View("CustomerDelete", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, customer.Id));
+                case "delete":                    
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    var dummy = model.Delete().Result;
+                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
 
                 default:
-                    return View("CustomerList", new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all));                    
+                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
             }
             
         }       
         
+        private DataViewModel<Customer> NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all);
+            }
+            else
+            {
+                return new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, id);
+            }
+            
+        }
+
     }
 }
