@@ -6,8 +6,7 @@ namespace webtest1.Data
     public class Category
     {    
         [Display(Name ="Category Id")] 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]           
-        public int? categoryId {get; set;}
+        public int categoryId {get; set;}
         
         [Display(Name ="Category Name")]        
         [MaxLength(15)]
