@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -16,7 +10,6 @@ namespace webtest1.Controllers
     public class EmployeeController : Controller
     {
         private readonly string _url_get_all;
-
         private readonly ILogger<EmployeeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
@@ -31,18 +24,69 @@ namespace webtest1.Controllers
 
         public IActionResult Index()
         {            
-            return View(new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all));
+            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
         }
-                
+        
         public IActionResult EmployeeList()
         {
-            return View(new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all));
+            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
         }
 
-        public IActionResult GetEmployee(DataViewModel<Employee> employee)
+        public IActionResult GetEmployee(DataViewModel<Employee> model)
         {
-            return View(employee);
-        }        
+            switch (model.Action)
+            {
+                case "updatedata":                                        
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    if (ModelState.IsValid && model.Put().Result)
+                    {                                            
+                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
+                    }
+                    else
+                    {
+                        return View("Edit", model);                                
+                    }
+                    
+                case "insertdata":                    
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    if (ModelState.IsValid && model.Post().Result)                                                
+                    {
+                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
+                    }
+                    else
+                    {
+                        return View("Insert", model);                                
+                    }                    
+                
+                case "edit":
+                    return View("Edit", NewViewModel(_clientFactory, _logger, _url_get_all, model.Id));
+                    
+                case "insert":
+                    return View("Insert", NewViewModel(_clientFactory,  _logger));
+
+                case "delete":                    
+                    model.Attach(_clientFactory, _logger, _url_get_all);
+                    var dummy = model.Delete().Result;
+                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
+
+                default:
+                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
+            }
+            
+        }       
         
+        private DataViewModel<Employee> NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all);
+            }
+            else
+            {
+                return new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all, id);
+            }
+            
+        }
+
     }
 }

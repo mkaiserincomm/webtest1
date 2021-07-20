@@ -1,0 +1,62 @@
+@using webtest1.Controllers
+@model DataViewModel<Employee>
+@{
+    ViewData["Title"] = "Employee List";
+}
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("GetEmployee", "Employee", FormMethod.Post))
+{
+    @(Html
+        .Grid(Model.Data)
+        .Build(columns =>
+        {
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.employeeId}')\">Edit</button>").Encoded(false);
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.employeeId}')\">Delete</button>").Encoded(false);            
+            columns.Add(Model => Model.employeeId);            
+            columns.Add(Model => Model.lastName);   
+            columns.Add(Model => Model.firstName);   
+        })
+        .Using(GridFilterMode.Header)
+        .Empty("No data found")
+        .Filterable()
+        .Sortable()
+        .Pageable(pager => {
+            pager.RowsPerPage = 8;
+        })
+    )
+
+    <button type="submit" onclick="doInsert()">Insert</button>
+
+    @Html.HiddenFor(Model => Model.Current);
+    @Html.HiddenFor(Model => Model.Id);
+    @Html.HiddenFor(Model => Model.Action);
+    
+    <script>
+    function doEdit(id)
+    {        
+        $("#Action").val("edit");
+        $("#Id").val(id);     
+    }
+
+    function doInsert(id)
+    {
+        $("#Action").val("insert");
+        $("#Id").val(id);             
+    }    
+    
+    function doDelete(id)
+    {
+        if (confirm("Delete?"))
+        {
+            $("#Action").val("delete");
+            $("#Id").val(id);       
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    </script>
+}

@@ -1,12 +1,21 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace webtest1.Data
 {    
     public class Employee
     {
+        
+        [Display(Name ="Employee Id")]        
         public int employeeId {get; set; }
-        public string LastName {get; set; }
-        public string FirstName {get; set; }
+        
+        [Display(Name ="Last Name")]        
+        public string lastName {get; set; }
+        
+        [Display(Name ="First Name")]        
+        public string firstName {get; set; }
+        
+        [Display(Name ="Title")]        
         public string Title {get; set; }
         public string TitleOfCourtesy {get; set; }
         public DateTime BirthDate {get; set; }

@@ -1,0 +1,16 @@
+@model DataViewModel<Employee>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.lastName)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.lastName)
+        @Html.ValidationMessageFor(Model => Model.Current.lastName)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.firstName)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.firstName)
+        @Html.ValidationMessageFor(Model => Model.Current.firstName)
+    </td>
+</tr>
