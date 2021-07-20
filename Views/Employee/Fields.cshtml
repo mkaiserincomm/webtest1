@@ -14,3 +14,31 @@
         @Html.ValidationMessageFor(Model => Model.Current.firstName)
     </td>
 </tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.title)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.title)
+        @Html.ValidationMessageFor(Model => Model.Current.title)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.titleOfCourtesy)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.titleOfCourtesy)
+        @Html.ValidationMessageFor(Model => Model.Current.titleOfCourtesy)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.birthDate)</td>
+    <td>        
+        @Html.TextBoxFor(Model => Model.Current.birthDate, new { @class = "datepicker" })
+        @Html.ValidationMessageFor(Model => Model.Current.birthDate)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.hireDate)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.hireDate, new { @class = "datepicker" })
+        @Html.ValidationMessageFor(Model => Model.Current.hireDate)
+    </td>
+</tr>

@@ -9,6 +9,9 @@
   </PropertyGroup>
   
   <ItemGroup>    
+    <PackageReference Include="jquery" Version="3.6.0" />    
+    <PackageReference Include="jquery-datetimepicker" Version="2.4.5" />    
+    <PackageReference Include="jquery.validation" Version="1.19.3" />    
     <PackageReference Include="NonFactors.Grid.Mvc6" Version="6.2.4" />    
     <PackageReference Include="prometheus-net" Version="4.2.0" />    
     <PackageReference Include="prometheus-net.AspNetCore" Version="4.2.0" />    

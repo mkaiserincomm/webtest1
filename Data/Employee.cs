@@ -15,21 +15,31 @@ namespace webtest1.Data
         [Display(Name ="First Name")]        
         public string firstName {get; set; }
         
-        [Display(Name ="Title")]        
-        public string Title {get; set; }
-        public string TitleOfCourtesy {get; set; }
-        public DateTime BirthDate {get; set; }
-        public DateTime HireDate {get; set; }
-        public string Address {get; set; }
-        public string City {get; set; }
-        public string Region {get; set; }
-        public string PostalCode {get; set; }
-        public string Country {get; set; }
-        public string HomePhone {get; set; }
-        public string Extension {get; set; }
-        public Byte[] Photo {get; set; }
-        public string Notes {get; set; }
-        public Int32? ReportsTo {get; set; }        
-        public string PhotoPath {get; set; }
+        [Display(Name ="Title")]                
+        public string title {get; set; }
+        
+        [Display(Name ="Title of Courtesy")] 
+        public string titleOfCourtesy {get; set; }
+        
+        [Display(Name ="Birth Date")] 
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime birthDate {get; set; }
+        
+        [Display(Name ="Hire Date")] 
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime hireDate {get; set; }
+        public string address {get; set; }
+        public string city {get; set; }
+        public string region {get; set; }
+        public string postalCode {get; set; }
+        public string country {get; set; }
+        public string homePhone {get; set; }
+        public string extension {get; set; }
+        public Byte[] photo {get; set; }
+        public string notes {get; set; }
+        public Int32? reportsTo {get; set; }        
+        public string photoPath {get; set; }
     }
 }

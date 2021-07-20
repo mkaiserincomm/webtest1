@@ -39,4 +39,11 @@
         $("#Action").val("cancel");          
         $("#Id").val($("#Current_employeeId").val());       
     }
+
+    $(document).ready(function(){
+        $(".datepicker").datepicker({ 
+            dateFormat: 'mm/dd/yyyy', 
+            timeFormat: 'hh:mm tt', 
+            dateonly:true });
+    });
 </script>

@@ -16,6 +16,10 @@
             columns.Add(Model => Model.employeeId);            
             columns.Add(Model => Model.lastName);   
             columns.Add(Model => Model.firstName);   
+            columns.Add(Model => Model.title);   
+            columns.Add(Model => Model.titleOfCourtesy);   
+            columns.Add(Model => Model.birthDate);   
+            columns.Add(Model => Model.hireDate);   
         })
         .Using(GridFilterMode.Header)
         .Empty("No data found")
