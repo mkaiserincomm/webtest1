@@ -10,12 +10,16 @@
 
     @Html.HiddenFor(Model => Model.Id)
     @Html.HiddenFor(Model => Model.Action)
-    
-    @Html.HiddenFor(Model => Model.Current.categoryId)
-
+        
     @Html.ValidationSummary(true)
     <table>
-
+        <tr>
+            <td>@Html.LabelFor(Model => Model.Current.categoryId)</td>
+            <td>
+                @Html.TextBoxFor(Model => Model.Current.categoryId)
+                @Html.ValidationMessageFor(Model => Model.Current.categoryId)
+            </td>
+        </tr>
         @await Html.PartialAsync("Fields", Model)
         <tr>            
             <td>&nbsp;</td>
