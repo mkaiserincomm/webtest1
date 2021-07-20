@@ -117,12 +117,8 @@ namespace webtest1.Models
                 .Accept
                 .Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
-            var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all); 
-            JsonSerializerOptions options = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };                       
-            request.Content = new StringContent(JsonSerializer.Serialize(this.Current, options), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all);                      
+            request.Content = new StringContent(JsonSerializer.Serialize(this.Current), Encoding.UTF8, "application/json");
             
             var response = await client.SendAsync(request);            
 

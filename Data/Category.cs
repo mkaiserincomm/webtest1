@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace webtest1.Data
 {    
     public class Category
     {    
-        [Display(Name ="Category Id")]            
+        [Display(Name ="Category Id")] 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]           
         public int? categoryId {get; set;}
         
         [Display(Name ="Category Name")]        
