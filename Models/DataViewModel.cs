@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -116,8 +117,12 @@ namespace webtest1.Models
                 .Accept
                 .Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
-            var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all);                        
-            request.Content = new StringContent(JsonSerializer.Serialize(this.Current), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all); 
+            JsonSerializerOptions options = new()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };                       
+            request.Content = new StringContent(JsonSerializer.Serialize(this.Current, options), Encoding.UTF8, "application/json");
             
             var response = await client.SendAsync(request);            
 

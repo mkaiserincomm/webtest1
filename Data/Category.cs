@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace webtest1.Data
 {    
     public class Category
-    {
+    {    
         [Display(Name ="Category Id")]            
         public int? categoryId {get; set;}
         
