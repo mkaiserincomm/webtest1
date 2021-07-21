@@ -32,7 +32,7 @@ namespace webtest1.Controllers
             return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
         }
 
-        public IActionResult GetEmployee(DataViewModel<Employee> model)
+        public IActionResult GetEmployee(EmployeeViewModel model)
         {
             switch (model.Action)
             {
@@ -44,6 +44,7 @@ namespace webtest1.Controllers
                     }
                     else
                     {
+                        model.LoadEmployeeList();
                         return View("Edit", model);                                
                     }
                     
@@ -55,14 +56,24 @@ namespace webtest1.Controllers
                     }
                     else
                     {
+                        model.LoadEmployeeList();
                         return View("Insert", model);                                
                     }                    
                 
                 case "edit":
-                    return View("Edit", NewViewModel(_clientFactory, _logger, _url_get_all, model.Id));
+                {
+                    var newModel = NewViewModel(_clientFactory,  _logger, _url_get_all, model.Id);
+                    newModel.LoadEmployeeList();
+                    return View("Edit", newModel);
+                }                    
                     
                 case "insert":
-                    return View("Insert", NewViewModel(_clientFactory,  _logger));
+                {
+                    var newModel = NewViewModel(_clientFactory,  _logger);
+                    newModel.Attach(_clientFactory, _logger, _url_get_all);
+                    newModel.LoadEmployeeList();
+                    return View("Insert", newModel);
+                }
 
                 case "delete":                    
                     model.Attach(_clientFactory, _logger, _url_get_all);
@@ -75,15 +86,15 @@ namespace webtest1.Controllers
             
         }       
         
-        private DataViewModel<Employee> NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
+        private EmployeeViewModel NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all);
+                return new EmployeeViewModel(_clientFactory, _logger, _url_get_all);
             }
             else
             {
-                return new DataViewModel<Employee>(_clientFactory, _logger, _url_get_all, id);
+                return new EmployeeViewModel(_clientFactory, _logger, _url_get_all, id);
             }
             
         }

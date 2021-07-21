@@ -1,4 +1,4 @@
-@model DataViewModel<Employee>
+@model EmployeeViewModel
 @{
     ViewData["Title"] = "Employee Edit for " + Model.Current.employeeId;
 }
@@ -21,7 +21,7 @@
             <td>&nbsp;</td>
             <td>
                 <button type="submit" onclick="doUpdate();">Update</button>
-                <button type="submit" onclick="doCancel();">Cancel</button>
+                <button type="button" onclick="doCancel();">Cancel</button>
             </td>
         </tr>
     </table>            
@@ -37,7 +37,8 @@
     function doCancel()
     {
         $("#Action").val("cancel");          
-        $("#Id").val($("#Current_employeeId").val());       
+        $("#Id").val($("#Current_employeeId").val());  
+        window.history.back();             
     }
 
     $(document).ready(function(){

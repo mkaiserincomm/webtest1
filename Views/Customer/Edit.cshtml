@@ -21,7 +21,7 @@
             <td>&nbsp;</td>
             <td>
                 <button type="submit" onclick="doUpdate();">Update</button>
-                <button type="submit" onclick="doCancel();">Cancel</button>
+                <button type="button" onclick="doCancel();">Cancel</button>
             </td>
         </tr>
     </table>            
@@ -38,5 +38,6 @@
     {
         $("#Action").val("cancel");          
         $("#Id").val($("#Current_customerId").val());       
+        window.history.back();    
     }
 </script>

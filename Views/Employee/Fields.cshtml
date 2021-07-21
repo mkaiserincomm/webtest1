@@ -1,4 +1,4 @@
-@model DataViewModel<Employee>
+@model EmployeeViewModel
 
 <tr>
     <td>@Html.LabelFor(Model => Model.Current.lastName)</td>
@@ -92,6 +92,13 @@
     </td>
 </tr>
 <tr>
+    <td>@Html.LabelFor(Model => Model.Current.reportsTo)</td>
+    <td>
+        @Html.DropDownListFor(Model => Model.Current.reportsTo, Model.EmployeeList)
+        @Html.ValidationMessageFor(Model => Model.Current.reportsTo)
+    </td>
+</tr>
+<tr>
     <td>@Html.LabelFor(Model => Model.Current.notes)</td>
     <td>
         @Html.TextAreaFor(Model => Model.Current.notes, 5, 80, null)
@@ -100,4 +107,5 @@
         @Html.HiddenFor(Model => Model.Current.reportsTo)
         @Html.HiddenFor(Model => Model.Current.photoPath)
     </td>
+    
 </tr>
