@@ -1,0 +1,69 @@
+@using webtest1.Controllers
+@model DataViewModel<Product>
+@{
+    ViewData["Title"] = "Product List";
+}
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("GetProduct", "Product", FormMethod.Post))
+{
+    @(Html
+        .Grid(Model.Data)
+        .Build(columns =>
+        {
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doEdit('{Model.productId}')\">Edit</button>").Encoded(false);
+            columns.Add(Model => $"<button type=\"submit\" onclick=\"doDelete('{Model.productId}')\">Delete</button>").Encoded(false);            
+            columns.Add(Model => Model.productId);
+            columns.Add(Model => Model.productName);
+            columns.Add(Model => Model.supplierId);
+            columns.Add(Model => Model.categoryId);
+            columns.Add(Model => Model.quantityPerUnit);
+            columns.Add(Model => Model.unitPrice);
+            columns.Add(Model => Model.unitsInStock);
+            columns.Add(Model => Model.unitsOnOrder);
+            columns.Add(Model => Model.reorderLevel);
+            columns.Add(Model => Model.discontinued);            
+        })
+        .Using(GridFilterMode.Header)
+        .Empty("No data found")
+        .Filterable()
+        .Sortable()
+        .Pageable(pager => {
+            pager.RowsPerPage = 8;
+        })
+    )
+
+    <button type="submit" onclick="doInsert()">Insert</button>
+
+    @Html.HiddenFor(Model => Model.Current);
+    @Html.HiddenFor(Model => Model.Id);
+    @Html.HiddenFor(Model => Model.Action);
+    
+    <script>
+    function doEdit(id)
+    {        
+        $("#Action").val("edit");
+        $("#Id").val(id);     
+    }
+
+    function doInsert(id)
+    {
+        $("#Action").val("insert");
+        $("#Id").val(id);             
+    }    
+    
+    function doDelete(id)
+    {
+        if (confirm("Delete?"))
+        {
+            $("#Action").val("delete");
+            $("#Id").val(id);       
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    </script>
+}

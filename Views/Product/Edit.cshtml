@@ -1,0 +1,43 @@
+@model DataViewModel<Product>
+@{
+    ViewData["Title"] = "Product Edit for " + Model.Current.productId;
+}
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("GetProduct", "Product", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(Model => Model.Id)
+    @Html.HiddenFor(Model => Model.Action)
+    
+    @Html.HiddenFor(Model => Model.Current.productId)
+
+    @Html.ValidationSummary(true)
+    <table>
+
+        @await Html.PartialAsync("Fields", Model)
+        <tr>            
+            <td>&nbsp;</td>
+            <td>
+                <button type="submit" onclick="doUpdate();">Update</button>
+                <button type="button" onclick="doCancel();">Cancel</button>
+            </td>
+        </tr>
+    </table>            
+}
+
+<script>
+    function doUpdate()
+    {            
+        $("#Action").val("updatedata");   
+        $("#Id").val($("#Current_productId").val());     
+    }
+    
+    function doCancel()
+    {
+        $("#Action").val("cancel");          
+        $("#Id").val($("#Current_productId").val());       
+        window.history.back();    
+    }
+</script>

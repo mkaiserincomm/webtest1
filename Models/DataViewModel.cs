@@ -15,9 +15,9 @@ namespace webtest1.Models
 {
     public class DataViewModel<T>
     {        
-        private string _url_get_all;
-        private IHttpClientFactory _clientFactory;        
-        private ILogger _logger;
+        protected string _url_get_all;
+        protected IHttpClientFactory _clientFactory;        
+        protected ILogger _logger;
 
         public DataViewModel()
         {

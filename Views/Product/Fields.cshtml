@@ -1,0 +1,73 @@
+@model DataViewModel<Product>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.productName)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.productName)
+        @Html.ValidationMessageFor(Model => Model.Current.productName)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.supplierId)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.supplierId)
+        @Html.ValidationMessageFor(Model => Model.Current.supplierId)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.categoryId)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.categoryId)
+        @Html.ValidationMessageFor(Model => Model.Current.categoryId)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.quantityPerUnit)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.quantityPerUnit)
+        @Html.ValidationMessageFor(Model => Model.Current.quantityPerUnit)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.unitPrice)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.unitPrice)
+        @Html.ValidationMessageFor(Model => Model.Current.unitPrice)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.unitsInStock)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.unitsInStock)
+        @Html.ValidationMessageFor(Model => Model.Current.unitsInStock)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.unitsOnOrder)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.unitsOnOrder)
+        @Html.ValidationMessageFor(Model => Model.Current.unitsOnOrder)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.reorderLevel)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.reorderLevel)
+        @Html.ValidationMessageFor(Model => Model.Current.reorderLevel)
+    </td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.discontinued)</td>
+    <td>
+        @Html.CheckBoxFor(Model => Model.Current.discontinued)        
+        @Html.ValidationMessageFor(Model => Model.Current.discontinued)
+    </td>
+</tr>   

@@ -44,7 +44,7 @@ namespace webtest1.Controllers
                     }
                     else
                     {
-                        model.LoadEmployeeList();
+                        model.LoadLists();
                         return View("Edit", model);                                
                     }
                     
@@ -56,14 +56,14 @@ namespace webtest1.Controllers
                     }
                     else
                     {
-                        model.LoadEmployeeList();
+                        model.LoadLists();
                         return View("Insert", model);                                
                     }                    
                 
                 case "edit":
                 {
                     var newModel = NewViewModel(_clientFactory,  _logger, _url_get_all, model.Id);
-                    newModel.LoadEmployeeList();
+                    newModel.LoadLists();
                     return View("Edit", newModel);
                 }                    
                     
@@ -71,7 +71,7 @@ namespace webtest1.Controllers
                 {
                     var newModel = NewViewModel(_clientFactory,  _logger);
                     newModel.Attach(_clientFactory, _logger, _url_get_all);
-                    newModel.LoadEmployeeList();
+                    newModel.LoadLists();
                     return View("Insert", newModel);
                 }
 
