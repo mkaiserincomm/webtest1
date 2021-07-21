@@ -26,6 +26,8 @@ namespace webtest1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(IDataService<>), typeof(DataService<>));
+            
             services.AddHealthChecks()
                 .AddCheck<LiveCheck>("live_check", null, new[] { "live" })
                 .AddCheck<ReadyCheck>("ready_check", null, new[] { "ready" })
