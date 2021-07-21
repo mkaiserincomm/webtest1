@@ -20,6 +20,13 @@
             columns.Add(Model => Model.titleOfCourtesy);   
             columns.Add(Model => Model.birthDate);   
             columns.Add(Model => Model.hireDate);   
+            columns.Add(Model => Model.address);  
+            columns.Add(Model => Model.city);  
+            columns.Add(Model => Model.region);  
+            columns.Add(Model => Model.postalCode);  
+            columns.Add(Model => Model.country);  
+            columns.Add(Model => Model.homePhone);  
+            columns.Add(Model => Model.extension);  
         })
         .Using(GridFilterMode.Header)
         .Empty("No data found")

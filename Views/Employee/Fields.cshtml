@@ -42,3 +42,62 @@
         @Html.ValidationMessageFor(Model => Model.Current.hireDate)
     </td>
 </tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.address)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.address)
+        @Html.ValidationMessageFor(Model => Model.Current.address)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.city)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.city)
+        @Html.ValidationMessageFor(Model => Model.Current.city)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.region)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.region)
+        @Html.ValidationMessageFor(Model => Model.Current.region)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.postalCode)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.postalCode)
+        @Html.ValidationMessageFor(Model => Model.Current.postalCode)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.country)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.country)
+        @Html.ValidationMessageFor(Model => Model.Current.country)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.homePhone)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.homePhone)
+        @Html.ValidationMessageFor(Model => Model.Current.homePhone)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.extension)</td>
+    <td>
+        @Html.TextBoxFor(Model => Model.Current.extension)
+        @Html.ValidationMessageFor(Model => Model.Current.extension)
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(Model => Model.Current.notes)</td>
+    <td>
+        @Html.TextAreaFor(Model => Model.Current.notes, 5, 80, null)
+        @Html.ValidationMessageFor(Model => Model.Current.notes)
+        @Html.HiddenFor(Model => Model.Current.photo)
+        @Html.HiddenFor(Model => Model.Current.reportsTo)
+        @Html.HiddenFor(Model => Model.Current.photoPath)
+    </td>
+</tr>
