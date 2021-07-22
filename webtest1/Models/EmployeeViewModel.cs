@@ -8,6 +8,6 @@ namespace webtest1.Models
 {
     public class EmployeeViewModel : DataViewModel<Employee>
     {
-        public SelectList EmployeeList {get; set;}
+        public SelectList EmployeeList {get; set;}        
     }
 }
