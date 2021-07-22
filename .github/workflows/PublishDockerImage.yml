@@ -26,7 +26,7 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./webtest1
           push: true    
           build-args: "SUFFIX=${{ github.run_number }}"      
           tags:   ${{ steps.meta.outputs.tags }} 

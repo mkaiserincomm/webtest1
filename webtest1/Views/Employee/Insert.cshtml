@@ -1,0 +1,54 @@
+@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Employee Insert";
+}
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("GetEmployee", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(Model => Model.Id)
+    @Html.HiddenFor(Model => Model.Action)
+        
+    @Html.ValidationSummary(true)
+    <table>
+        <tr>
+            <td>@Html.LabelFor(Model => Model.Current.employeeId)</td>
+            <td>
+                @Html.TextBoxFor(Model => Model.Current.employeeId)
+                @Html.ValidationMessageFor(Model => Model.Current.employeeId)
+            </td>
+        </tr>
+        @await Html.PartialAsync("Fields", Model)
+        <tr>            
+            <td>&nbsp;</td>
+            <td>
+                <button type="submit" onclick="doInsert();">Insert</button>
+                <button type="button" onclick="doCancel();">Cancel</button>
+            </td>
+        </tr>
+    </table>            
+}
+
+<script>
+    function doInsert()
+    {            
+        $("#Action").val("insertdata");   
+        $("#Id").val($("#Current_employeeId").val());     
+    }
+    
+    function doCancel()
+    {
+        $("#Action").val("cancel");          
+        $("#Id").val($("#Current_employeeId").val());  
+        window.history.back();             
+    }
+
+    $(document).ready(function(){
+        $(".datepicker").datepicker({ 
+            dateFormat: 'mm/dd/yyyy', 
+            timeFormat: 'hh:mm tt', 
+            dateonly:true });
+    });
+</script>
