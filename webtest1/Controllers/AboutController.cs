@@ -14,28 +14,26 @@ using webtest1.Models;
 namespace webtest1.Controllers
 {
     public class AboutController : Controller
-    {
-        private readonly string _url_get_all;
-        private readonly ILogger<AboutController> _logger;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+    {        
+        private readonly ILogger<AboutController> _logger;     
+        IVersionService _versionService;
 
-        public AboutController(ILogger<AboutController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
+        public AboutController(ILogger<AboutController> logger, IVersionService versionService)
         {
-            _logger = logger;
-            _clientFactory = clientFactory;
-            _configuration = configuration;
-            _url_get_all = _configuration.GetValue<string>("DAL:About");
+            _logger = logger;            
+            _versionService = versionService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {            
-            return View(new AboutViewModel(_clientFactory, _configuration, _logger, _url_get_all));
+            var model = new AboutViewModel();
+            model.DataVersion = await _versionService.GetVersion();
+            return View(model);
         }
                         
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {            
-            return View(new AboutViewModel(_clientFactory, _configuration, _logger, _url_get_all));
+            return await Index();
         }        
         
     }

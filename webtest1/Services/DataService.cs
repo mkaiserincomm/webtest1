@@ -6,22 +6,24 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using webtest1.Options;
 
 public class DataService<T> : IDataService<T>
 {    
     private readonly IHttpClientFactory _clientFactory;        
     private readonly ILogger _logger;
-    private readonly IConfiguration _configuration;
+    private readonly IOptions<DALOptions> _options;
 
     private string _url_get_all;
 
-    public DataService (IHttpClientFactory clientFactory, ILogger<DataService<T>> logger, IConfiguration configuration)
+    public DataService (IHttpClientFactory clientFactory, ILogger<DataService<T>> logger, IOptions<DALOptions> options)
     {
         _clientFactory = clientFactory;
         _logger = logger;
-        _configuration = configuration;
-                
-        _url_get_all = _configuration.GetValue<string>("DAL:" + typeof(T).Name);
+        _options = options;
+                        
+        _url_get_all = _options.Value.GetValue(typeof(T).Name);        
     }
 
     public async Task<bool> Delete(string id)

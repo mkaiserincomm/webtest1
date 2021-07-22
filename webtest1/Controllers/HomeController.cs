@@ -15,15 +15,11 @@ namespace webtest1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+        private readonly ILogger<HomeController> _logger;        
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger)
         {
-            _logger = logger;
-            _clientFactory = clientFactory;
-            _configuration = configuration;
+            _logger = logger;            
         }
 
         public IActionResult Index()

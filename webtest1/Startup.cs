@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using webtest1.Controllers;
+using webtest1.Options;
 
 namespace webtest1
 {
@@ -26,7 +27,10 @@ namespace webtest1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DALOptions>(Configuration.GetSection(DALOptions.DAL));
+
             services.AddSingleton(typeof(IDataService<>), typeof(DataService<>));
+            services.AddSingleton(typeof(IVersionService), typeof(VersionService));
             
             services.AddHealthChecks()
                 .AddCheck<LiveCheck>("live_check", null, new[] { "live" })
@@ -44,14 +48,13 @@ namespace webtest1
             app.UseMetricServer();
             app.UseRequestMiddleware();
             
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.EnvironmentName == "Local")
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/Home/Error");                
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
