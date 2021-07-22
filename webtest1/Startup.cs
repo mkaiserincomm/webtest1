@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Prometheus;
 using webtest1.Controllers;
 using webtest1.Options;
+using webtest1.Services;
 
 namespace webtest1
 {

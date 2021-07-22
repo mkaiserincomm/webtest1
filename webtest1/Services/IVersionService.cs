@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 
-public interface IVersionService
+namespace webtest1.Services
 {
-    Task<string> GetVersion();
+    public interface IVersionService
+    {
+        Task<string> GetVersion();
+    }
 }

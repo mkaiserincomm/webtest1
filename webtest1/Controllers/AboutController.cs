@@ -10,13 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using webtest1.Data;
 using webtest1.Models;
+using webtest1.Services;
 
 namespace webtest1.Controllers
 {
     public class AboutController : Controller
     {        
         private readonly ILogger<AboutController> _logger;     
-        IVersionService _versionService;
+        private readonly IVersionService _versionService;
 
         public AboutController(ILogger<AboutController> logger, IVersionService versionService)
         {
