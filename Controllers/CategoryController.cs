@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,84 +9,87 @@ using webtest1.Models;
 namespace webtest1.Controllers
 {
     public class CategoryController : Controller
-    {
-        private readonly string _url_get_all;
-        private readonly ILogger<CategoryController> _logger;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+    {        
+        private readonly ILogger<CategoryController> _logger;                
+        private readonly IDataService<Category> _dataService;
 
-        public CategoryController(ILogger<CategoryController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
+        public CategoryController(ILogger<CategoryController> logger, IDataService<Category> dataService)
         {
             _logger = logger;
-            _clientFactory = clientFactory;
-            _configuration = configuration;
-            _url_get_all = _configuration.GetValue<string>("DAL:Category");
+            _dataService = dataService;            
         }
 
-        public IActionResult Index()
-        {            
-            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
+        public async Task<IActionResult> Index()
+        {
+            return await CategoryList();
         }
         
-        public IActionResult CategoryList()
+        public async Task<IActionResult> CategoryList()
         {
-            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
+            var viewModel = NewViewModel();
+            viewModel.Data = await _dataService.Get();
+            return View("List", viewModel);
         }
 
-        public IActionResult GetCategory(DataViewModel<Category> model)
+        public async Task<IActionResult> GetCategory(DataViewModel<Category> model)
         {
             switch (model.Action)
             {
-                case "updatedata":                                        
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    if (ModelState.IsValid && model.Put().Result)
-                    {                                            
-                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
-                    }
-                    else
-                    {
-                        return View("Edit", model);                                
-                    }
-                    
-                case "insertdata":                    
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    if (ModelState.IsValid && model.Post().Result)                                                
-                    {
-                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
-                    }
-                    else
-                    {
-                        return View("Insert", model);                                
-                    }                    
-                
-                case "edit":
-                    return View("Edit", NewViewModel(_clientFactory, _logger, _url_get_all, model.Id));
-                    
-                case "insert":
-                    return View("Insert", NewViewModel(_clientFactory,  _logger));
-
-                case "delete":                    
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    var dummy = model.Delete().Result;
-                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
-
-                default:
-                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
+                case "updatedata": return await UpdateData(model);                                                            
+                case "insertdata": return await InsertData(model);                                                                                        
+                case "edit": return await Edit(model);                                        
+                case "insert": return Insert();                    
+                case "delete": return await Delete(model);                             
+                default: return await CategoryList();
             }
             
         }       
         
-        private DataViewModel<Category> NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return new DataViewModel<Category>(_clientFactory, _logger, _url_get_all);
+        private DataViewModel<Category> NewViewModel()
+        {        
+            return new DataViewModel<Category>();            
+        }    
+
+        private async Task<IActionResult> UpdateData(DataViewModel<Category> model)
+        {            
+            if (ModelState.IsValid && await _dataService.Put(model.Id, model.Current))
+            {                            
+                return await CategoryList();
             }
             else
             {
-                return new DataViewModel<Category>(_clientFactory, _logger, _url_get_all, id);
+                return View("Edit", model);                                
             }
-            
+        }
+
+        private async Task<IActionResult> InsertData(DataViewModel<Category> model)
+        {            
+            if (ModelState.IsValid && await _dataService.Post(model.Current))
+            {                            
+                return await CategoryList();
+            }
+            else
+            {
+                return View("Insert", model);                                
+            }
+        }
+
+        private async Task<IActionResult> Edit(DataViewModel<Category> model)
+        {  
+            var viewModel = NewViewModel();
+            viewModel.Current = await _dataService.GetById(model.Id);
+            return View("Edit", viewModel);                     
+        }
+
+        private IActionResult Insert()
+        {                        
+            return View("Insert", NewViewModel());
+        }
+
+        private async Task<IActionResult> Delete(DataViewModel<Category> model)
+        {                        
+            await _dataService.Delete(model.Id);
+            return await CategoryList();
         }
 
     }

@@ -11,12 +11,14 @@ namespace webtest1.Controllers
     public class ProductController : Controller
     {        
         private readonly ILogger<ProductController> _logger;                
-        private readonly IDataService<Product> _productDataService;
+        private readonly IDataService<Product> _dataService;
+        private readonly IDataService<Category> _categoryDataService;
 
-        public ProductController(ILogger<ProductController> logger, IDataService<Product> productDataService)
+        public ProductController(ILogger<ProductController> logger, IDataService<Product> dataService, IDataService<Category> categoryDataService)
         {
             _logger = logger;
-            _productDataService = productDataService;            
+            _dataService = dataService;            
+            _categoryDataService = categoryDataService;
         }
 
         public async Task<IActionResult> Index()
@@ -27,7 +29,7 @@ namespace webtest1.Controllers
         public async Task<IActionResult> ProductList()
         {
             var viewModel = NewViewModel();
-            viewModel.Data = await _productDataService.Get();
+            viewModel.Data = await _dataService.Get();
             return View("List", viewModel);
         }
 
@@ -50,9 +52,9 @@ namespace webtest1.Controllers
             return new DataViewModel<Product>();            
         }    
 
-                private async Task<IActionResult> UpdateData(DataViewModel<Product> model)
+        private async Task<IActionResult> UpdateData(DataViewModel<Product> model)
         {            
-            if (ModelState.IsValid && await _productDataService.Put(model.Id, model.Current))
+            if (ModelState.IsValid && await _dataService.Put(model.Id, model.Current))
             {                            
                 return await ProductList();
             }
@@ -64,7 +66,7 @@ namespace webtest1.Controllers
 
         private async Task<IActionResult> InsertData(DataViewModel<Product> model)
         {            
-            if (ModelState.IsValid && await _productDataService.Post(model.Current))
+            if (ModelState.IsValid && await _dataService.Post(model.Current))
             {                            
                 return await ProductList();
             }
@@ -77,7 +79,7 @@ namespace webtest1.Controllers
         private async Task<IActionResult> Edit(DataViewModel<Product> model)
         {  
             var viewModel = NewViewModel();
-            viewModel.Current = await _productDataService.GetById(model.Id);
+            viewModel.Current = await _dataService.GetById(model.Id);
             return View("Edit", viewModel);                     
         }
 
@@ -88,7 +90,7 @@ namespace webtest1.Controllers
 
         private async Task<IActionResult> Delete(DataViewModel<Product> model)
         {                        
-            await _productDataService.Delete(model.Id);
+            await _dataService.Delete(model.Id);
             return await ProductList();
         }
 

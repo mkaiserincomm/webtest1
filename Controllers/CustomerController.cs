@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,84 +9,87 @@ using webtest1.Models;
 namespace webtest1.Controllers
 {
     public class CustomerController : Controller
-    {
-        private readonly string _url_get_all;
-        private readonly ILogger<CustomerController> _logger;
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+    {        
+        private readonly ILogger<CustomerController> _logger;                
+        private readonly IDataService<Customer> _dataService;
 
-        public CustomerController(ILogger<CustomerController> logger, IHttpClientFactory clientFactory, IConfiguration configuration)
+        public CustomerController(ILogger<CustomerController> logger, IDataService<Customer> dataService)
         {
             _logger = logger;
-            _clientFactory = clientFactory;
-            _configuration = configuration;
-            _url_get_all = _configuration.GetValue<string>("DAL:Customer");
+            _dataService = dataService;            
         }
 
-        public IActionResult Index()
-        {            
-            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
+        public async Task<IActionResult> Index()
+        {
+            return await CustomerList();
         }
         
-        public IActionResult CustomerList()
+        public async Task<IActionResult> CustomerList()
         {
-            return View("List", NewViewModel(_clientFactory,  _logger, _url_get_all));
+            var viewModel = NewViewModel();
+            viewModel.Data = await _dataService.Get();
+            return View("List", viewModel);
         }
 
-        public IActionResult GetCustomer(DataViewModel<Customer> model)
+        public async Task<IActionResult> GetCustomer(DataViewModel<Customer> model)
         {
             switch (model.Action)
             {
-                case "updatedata":                                        
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    if (ModelState.IsValid && model.Put().Result)
-                    {                                            
-                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
-                    }
-                    else
-                    {
-                        return View("Edit", model);                                
-                    }
-                    
-                case "insertdata":                    
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    if (ModelState.IsValid && model.Post().Result)                                                
-                    {
-                        return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                     
-                    }
-                    else
-                    {
-                        return View("Insert", model);                                
-                    }                    
-                
-                case "edit":
-                    return View("Edit", NewViewModel(_clientFactory, _logger, _url_get_all, model.Id));
-                    
-                case "insert":
-                    return View("Insert", NewViewModel(_clientFactory,  _logger));
-
-                case "delete":                    
-                    model.Attach(_clientFactory, _logger, _url_get_all);
-                    var dummy = model.Delete().Result;
-                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
-
-                default:
-                    return View("List", NewViewModel(_clientFactory, _logger, _url_get_all));                    
+                case "updatedata": return await UpdateData(model);                                                            
+                case "insertdata": return await InsertData(model);                                                                                        
+                case "edit": return await Edit(model);                                        
+                case "insert": return Insert();                    
+                case "delete": return await Delete(model);                             
+                default: return await CustomerList();
             }
             
         }       
         
-        private DataViewModel<Customer> NewViewModel(IHttpClientFactory clientFactory, ILogger logger, string url_get_all = "", string id = null)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all);
+        private DataViewModel<Customer> NewViewModel()
+        {        
+            return new DataViewModel<Customer>();            
+        }    
+
+        private async Task<IActionResult> UpdateData(DataViewModel<Customer> model)
+        {            
+            if (ModelState.IsValid && await _dataService.Put(model.Id, model.Current))
+            {                            
+                return await CustomerList();
             }
             else
             {
-                return new DataViewModel<Customer>(_clientFactory, _logger, _url_get_all, id);
+                return View("Edit", model);                                
             }
-            
+        }
+
+        private async Task<IActionResult> InsertData(DataViewModel<Customer> model)
+        {            
+            if (ModelState.IsValid && await _dataService.Post(model.Current))
+            {                            
+                return await CustomerList();
+            }
+            else
+            {
+                return View("Insert", model);                                
+            }
+        }
+
+        private async Task<IActionResult> Edit(DataViewModel<Customer> model)
+        {  
+            var viewModel = NewViewModel();
+            viewModel.Current = await _dataService.GetById(model.Id);
+            return View("Edit", viewModel);                     
+        }
+
+        private IActionResult Insert()
+        {                        
+            return View("Insert", NewViewModel());
+        }
+
+        private async Task<IActionResult> Delete(DataViewModel<Customer> model)
+        {                        
+            await _dataService.Delete(model.Id);
+            return await CustomerList();
         }
 
     }
