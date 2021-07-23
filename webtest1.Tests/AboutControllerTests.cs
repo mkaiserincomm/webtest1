@@ -79,7 +79,7 @@ namespace webtest1.Tests
             var result = await aboutController.About();            
 
             // Validate
-            result.Should().NotBeNull();
+            result.Should().NotBeNull();                
             result.Should().BeOfType<ViewResult>();
             versionService.Verify();
 
