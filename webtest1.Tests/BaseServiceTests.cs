@@ -16,6 +16,7 @@ namespace webtest1.Tests
     {
         protected Mock<HttpMessageHandler> httpMessageHandler;
         protected Mock<IHttpClientFactory> httpClientFactory;
+        protected HttpRequestMessage httpRequestMessage;
                  
         protected void SetupHttpClientFactory(System.Net.HttpStatusCode statusCode, string resultString)
         {
@@ -30,13 +31,13 @@ namespace webtest1.Tests
                 .ReturnsAsync(new HttpResponseMessage() {
                     StatusCode = statusCode,
                     Content = new StringContent(resultString),                    
-                })
+                })                
                 .Verifiable("Message Handler was not Called"); 
             
             httpClientFactory = new Mock<IHttpClientFactory>();
             httpClientFactory
                 .Setup(x => x.CreateClient(It.IsAny<string>()))
-                .Returns(new HttpClient(httpMessageHandler.Object))                
+                .Returns(new HttpClient(httpMessageHandler.Object))                   
                 .Verifiable("Client Not Created");            
         }       
 
@@ -52,7 +53,7 @@ namespace webtest1.Tests
                 )
                 .ReturnsAsync(new HttpResponseMessage() {
                     StatusCode = statusCode
-                })
+                })                
                 .Verifiable("Message Handler was not Called"); 
             
             httpClientFactory = new Mock<IHttpClientFactory>();
