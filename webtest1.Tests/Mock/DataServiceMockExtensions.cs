@@ -18,10 +18,17 @@ namespace webtest1.Tests.Mock
             return dataService;
         }
 
-        public static Mock<IDataService<T>> AddGetById<T>(this Mock<IDataService<T>> dataService, List<T> dataServiceSampleData ) 
+        public static Mock<IDataService<T>> AddGetById<T>(this Mock<IDataService<T>> dataService, List<T> dataServiceSampleData, bool success = true ) 
         {
-            dataService.Setup(x => x.GetById(It.Is<string>(p => p == "1"))).ReturnsAsync(dataServiceSampleData[0]);
-            dataService.Setup(x => x.GetById(It.Is<string>(p => p == "2"))).ReturnsAsync(dataServiceSampleData[1]);            
+            if (success)
+            {
+                dataService.Setup(x => x.GetById(It.Is<string>(p => p == "1"))).ReturnsAsync(dataServiceSampleData[0]);
+                dataService.Setup(x => x.GetById(It.Is<string>(p => p == "2"))).ReturnsAsync(dataServiceSampleData[1]);            
+            }
+            else
+            {
+                dataService.Setup(x => x.GetById(It.IsAny<string>())).ReturnsAsync(default(T));            
+            }
             return dataService;
         }
         public static Mock<IDataService<T>> AddPut<T>(this Mock<IDataService<T>> dataService, List<T> dataServiceSampleData, bool success) 

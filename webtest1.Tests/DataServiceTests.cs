@@ -2,13 +2,8 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Moq.Protected;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;  
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using webtest1.Data;
 using webtest1.Options;
@@ -16,7 +11,7 @@ using webtest1.Services;
 using Xunit;
 
 namespace webtest1.Tests
-{        
+{
     public class DataServiceTests : BaseServiceTest
     {
 

@@ -1,14 +1,8 @@
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using webtest1.Options;
-using webtest1.Services;
-using Xunit;
 
 namespace webtest1.Tests
 {

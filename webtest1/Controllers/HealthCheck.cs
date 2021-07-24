@@ -10,16 +10,15 @@ namespace webtest1.Controllers
             HealthCheckContext context,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = true;
-
-            if (healthCheckResultHealthy)
+            //var healthCheckResultHealthy = true;
+            //if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
                     HealthCheckResult.Healthy("alive"));
             }
 
-            return Task.FromResult(
-                HealthCheckResult.Unhealthy("dead"));
+            //return Task.FromResult(
+            //    HealthCheckResult.Unhealthy("dead"));
         }        
     }
 
@@ -29,16 +28,15 @@ namespace webtest1.Controllers
             HealthCheckContext context,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = true;
-
-            if (healthCheckResultHealthy)
+            //var healthCheckResultHealthy = true;
+            //if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
                     HealthCheckResult.Healthy("started"));
             }
 
-            return Task.FromResult(
-                HealthCheckResult.Unhealthy("not started"));
+            //return Task.FromResult(
+            //    HealthCheckResult.Unhealthy("not started"));
         }         
     }
 
@@ -48,16 +46,15 @@ namespace webtest1.Controllers
             HealthCheckContext context,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = true;
-
-            if (healthCheckResultHealthy)
+            //var healthCheckResultHealthy = true;
+            //if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
                     HealthCheckResult.Healthy("ready"));
             }
 
-            return Task.FromResult(
-                HealthCheckResult.Unhealthy("not ready"));
+            //return Task.FromResult(
+            //    HealthCheckResult.Unhealthy("not ready"));
         }        
     }
 }
