@@ -5,34 +5,48 @@ using webtest1.Models;
 namespace webtest1.Tests.TestData
 {
     // Test Data
-    public class GetCategoryTestData
+    public class GetCustomerTestData
     {
-        public static List<Category> TestData = new List<Category>
+        public static List<Customer> TestData = new List<Customer>
         {
-            new Category{
-                categoryId = 1,
-                categoryName = "First",
-                description = "description of first",
-                picture = new byte[] { 1, 2, 3, 4 }
+            new Customer{                
+                customerId = "1",
+                companyName = "company1",
+                contactName = "contact1",
+                contactTitle = "title1",
+                address = "address1",
+                city = "city1",
+                region = "11",
+                postalCode = "11111",
+                country = "C1",
+                phone = "1111",
+                fax = "1111"
             },
-            new Category{
-                categoryId = 2,
-                categoryName = "Second",
-                description = "description of second",
-                picture = new byte[] { 5, 6, 7, 8 }
+            new Customer{
+                customerId = "2",
+                companyName = "company2",
+                contactName = "contact2",
+                contactTitle = "title2",
+                address = "address2",
+                city = "city2",
+                region = "22",
+                postalCode = "22222",
+                country = "C2",
+                phone = "2222",
+                fax = "2222"
             }
         };    
     }
 
-    // Test cases for CategoryController_GetCategory_Success
-    public class GetCategoryTestCases : IEnumerable<object[]>
+    // Test cases for CustomerController_GetCustomer_Success
+    public class GetCustomerTestCases : IEnumerable<object[]>
     {                            
         public IEnumerator<object[]> GetEnumerator()
         {
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],                    
+                    Current = GetCustomerTestData.TestData[0],                    
                     Action = "updatedata",
                     Id = "1"
                 }, 
@@ -40,9 +54,9 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],
+                    Current = GetCustomerTestData.TestData[0],
                     Action = "updatedata",
                     Id = "1"
                 }, 
@@ -50,9 +64,9 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],
+                    Current = GetCustomerTestData.TestData[0],
                     Action = "updatedata",
                     Id = "1"
                 }, 
@@ -60,9 +74,9 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],
+                    Current = GetCustomerTestData.TestData[0],
                     Action = "insertdata",
                     Id = "1"
                 }, 
@@ -70,9 +84,9 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],
+                    Current = GetCustomerTestData.TestData[0],
                     Action = "insertdata",
                     Id = "1"
                 }, 
@@ -80,9 +94,9 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
-                    Current = GetCategoryTestData.TestData[0],
+                    Current = GetCustomerTestData.TestData[0],
                     Action = "insertdata",
                     Id = "1"
                 }, 
@@ -90,7 +104,7 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
                     Current = null,
                     Action = "edit",
@@ -100,7 +114,7 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
                     Current = null,
                     Action = "insert"
@@ -109,7 +123,7 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
                     Current = null,
                     Action = "delete",
@@ -119,7 +133,7 @@ namespace webtest1.Tests.TestData
             };
 
             yield return new object[] { 
-                new DataViewModel<Category>{
+                new DataViewModel<Customer>{
                     Data = null,
                     Current = null,
                     Action = ""                    
