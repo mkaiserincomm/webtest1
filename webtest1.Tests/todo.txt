@@ -1,0 +1,3 @@
+Mock Middleware:
+    https://stackoverflow.com/questions/59583406/how-to-unit-test-a-net-middleware-that-uses-response-onstarting
+
