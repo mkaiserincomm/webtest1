@@ -20,7 +20,7 @@ namespace webtest1.Tests
             const string testUri = "http://localhost/api/Version";
             const string resultString = "1234";   
 
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.OK, resultString);            
             var logger = new Mock<ILogger<VersionService>>();                   
             var options = new Mock<IOptions<DALOptions>>();                         
@@ -43,7 +43,7 @@ namespace webtest1.Tests
             const string testUri = "http://localhost/api/Version";
             const string resultString = "1234";   
 
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.NotFound, resultString);            
             var logger = new Mock<ILogger<VersionService>>();                   
             var options = new Mock<IOptions<DALOptions>>();                         

@@ -45,7 +45,7 @@ namespace webtest1.Tests
                 }
             };
 
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.OK, JsonSerializer.Serialize(sampleData));                                                                       
             
             // Act
@@ -62,7 +62,7 @@ namespace webtest1.Tests
         [Fact]
         public async Task DataService_Get_Failure()
         {                                    
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.InternalServerError);                                                                       
             
             // Act
@@ -87,7 +87,7 @@ namespace webtest1.Tests
                 picture = new byte[] { 1, 2, 3, 4 }
             };
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.OK, JsonSerializer.Serialize(sampleData));                                    
             
             // Act
@@ -107,7 +107,7 @@ namespace webtest1.Tests
         {         
             const int id = 999;            
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.NotFound);                                                                    
             
             // Act
@@ -131,7 +131,7 @@ namespace webtest1.Tests
                 picture = new byte[] { 1, 2, 3, 4 }
             };
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.OK);                                    
             
             // Act
@@ -155,7 +155,7 @@ namespace webtest1.Tests
                 picture = new byte[] { 1, 2, 3, 4 }
             };
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.InternalServerError);                                    
             
             // Act
@@ -179,7 +179,7 @@ namespace webtest1.Tests
                 picture = new byte[] { 1, 2, 3, 4 }
             };
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.Created);                                    
             
             // Act
@@ -203,7 +203,7 @@ namespace webtest1.Tests
                 picture = new byte[] { 1, 2, 3, 4 }
             };
               
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.InternalServerError);                                    
             
             // Act
@@ -222,7 +222,7 @@ namespace webtest1.Tests
         {
             const int id = 1;                        
 
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.OK);                                    
             
             // Act
@@ -241,7 +241,7 @@ namespace webtest1.Tests
         {
             const int id = 1;                        
 
-            // Setup                            
+            // Arrange                          
             SetupHttpClientFactory(System.Net.HttpStatusCode.NotFound);                                    
             
             // Act

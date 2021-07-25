@@ -28,7 +28,7 @@ namespace webtest1.Tests
             const string testEnvironment = "TEST";  
             string versionTest = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
             versionService
@@ -42,7 +42,7 @@ namespace webtest1.Tests
             var aboutController = new AboutController(logger.Object, versionService.Object);
             var result = await aboutController.Index();            
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             versionService.Verify();
@@ -64,7 +64,7 @@ namespace webtest1.Tests
             const string testEnvironment = "TEST";  
             string versionTest = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
             versionService
@@ -78,7 +78,7 @@ namespace webtest1.Tests
             var aboutController = new AboutController(logger.Object, versionService.Object);
             var result = await aboutController.About();            
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();                
             result.Should().BeOfType<ViewResult>();
             versionService.Verify();

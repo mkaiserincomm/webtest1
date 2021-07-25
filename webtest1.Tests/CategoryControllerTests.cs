@@ -28,7 +28,7 @@ namespace webtest1.Tests
         [Fact]
         public async Task CategoryController_Index_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<CategoryController>>();                   
             var dataService = DataServiceMockExtensions.GetDataServceMock<Category>().AddGet(_dataServiceSampleData);                  
 
@@ -36,7 +36,7 @@ namespace webtest1.Tests
             var controller = new CategoryController(logger.Object, dataService.Object);
             var result = await controller.Index();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             dataService.Verify();
@@ -52,7 +52,7 @@ namespace webtest1.Tests
         [Fact]
         public async Task CategoryController_CategoryList_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<CategoryController>>();                   
             var dataService = DataServiceMockExtensions.GetDataServceMock<Category>().AddGet(_dataServiceSampleData);                  
 
@@ -60,7 +60,7 @@ namespace webtest1.Tests
             var controller = new CategoryController(logger.Object, dataService.Object);
             var result = await controller.CategoryList();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             dataService.Verify();
@@ -79,7 +79,7 @@ namespace webtest1.Tests
         {
             _output.WriteLine("Description: {0}", description);
 
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<CategoryController>>();                               
             var dataService = DataServiceMockExtensions.GetDataServceMock<Category>();
             switch (testModel.Action)
@@ -109,7 +109,7 @@ namespace webtest1.Tests
             if (!stateIsValid) controller.ModelState.AddModelError("categoryName", "Category Name is Required");      
             var result = await controller.GetCategory(testModel);            
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();            
 

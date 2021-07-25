@@ -12,13 +12,13 @@ namespace webtest1.Tests
         [ClassData(typeof(HealthCheckTestData))]
         public async Task LiveCheck_CheckHealthAsync_Success(IHealthCheck healthCheck)
         {
-            // Setup
+            // Arrange
             var healthCheckContext = new HealthCheckContext();
 
             // Act             
             var result = await healthCheck.CheckHealthAsync(healthCheckContext);
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             (result.Status == HealthStatus.Healthy).Should().BeTrue();
         }

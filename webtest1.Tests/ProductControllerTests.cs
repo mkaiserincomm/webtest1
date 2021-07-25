@@ -28,7 +28,7 @@ namespace webtest1.Tests
         [Fact]
         public async Task ProductController_Index_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<ProductController>>();                   
             var dataService = DataServiceMockExtensions.GetDataServceMock<Product>().AddGet(_dataServiceSampleData);    
             var categoryDataService = DataServiceMockExtensions.GetDataServceMock<Category>().AddGet(GetCategoryTestData.TestData);              
@@ -37,7 +37,7 @@ namespace webtest1.Tests
             var controller = new ProductController(logger.Object, dataService.Object, categoryDataService.Object);
             var result = await controller.Index();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             dataService.Verify();
@@ -53,7 +53,7 @@ namespace webtest1.Tests
         [Fact]
         public async Task ProductController_ProductList_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<ProductController>>();                   
             var dataService = DataServiceMockExtensions.GetDataServceMock<Product>().AddGet(_dataServiceSampleData);  
             var categoryDataService = DataServiceMockExtensions.GetDataServceMock<Category>().AddGet(GetCategoryTestData.TestData);                  
@@ -62,7 +62,7 @@ namespace webtest1.Tests
             var controller = new ProductController(logger.Object, dataService.Object, categoryDataService.Object);
             var result = await controller.ProductList();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             dataService.Verify();
@@ -81,7 +81,7 @@ namespace webtest1.Tests
         {
             _output.WriteLine("Description: {0}", description);
 
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<ProductController>>();                               
             var dataService = DataServiceMockExtensions.GetDataServceMock<Product>();
             switch (testModel.Action)
@@ -112,7 +112,7 @@ namespace webtest1.Tests
             if (!stateIsValid) controller.ModelState.AddModelError("ProductName", "Product Name is Required");      
             var result = await controller.GetProduct(testModel);            
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();            
 

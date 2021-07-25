@@ -14,14 +14,14 @@ namespace webtest1.Tests
         [Fact]
         public void HomeController_Index_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<HomeController>>();                                                                
 
             // Act 
             var controller = new HomeController(logger.Object);
             var result = controller.Index();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();            
 
@@ -32,7 +32,7 @@ namespace webtest1.Tests
         [Fact]
         public void HomeController_Error_Success()
         {
-            // Setup
+            // Arrange
             var logger = new Mock<ILogger<HomeController>>();    
             
             // Act 
@@ -42,7 +42,7 @@ namespace webtest1.Tests
             };
             var result = controller.Error();
 
-            // Validate
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();            
 

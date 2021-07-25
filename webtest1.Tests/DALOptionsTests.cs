@@ -11,7 +11,7 @@ namespace webtest1.Tests
         [Fact]
         public void DALOptions_All_Success()
         {
-            // Setup
+            // Arrange
             var configurationBuilder = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {                    
@@ -27,7 +27,7 @@ namespace webtest1.Tests
             // Act             
             var options = Microsoft.Extensions.Options.Options.Create(configuration.GetSection("DAL").Get<DALOptions>());            
 
-            // Validate            
+            // Assert            
             options.Value.About.Should().BeEquivalentTo("http://mssqltest1.kaiser.guru/api/Version");
             options.Value.Category.Should().BeEquivalentTo("http://mssqltest1.kaiser.guru/api/Category");
             options.Value.Customer.Should().BeEquivalentTo("http://mssqltest1.kaiser.guru/api/Customer");
