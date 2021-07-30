@@ -29,6 +29,7 @@ namespace webtest1.Controllers
         {            
             var model = new AboutViewModel();
             model.DataVersion = await _versionService.GetVersion();
+            if (Request.Cookies != null) model.Cookies = Request.Cookies.ToList();            
             return View(model);
         }
                         

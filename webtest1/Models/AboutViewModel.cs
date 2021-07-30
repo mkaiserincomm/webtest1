@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace webtest1.Models
 {
     public class AboutViewModel
     {        
         public string DataVersion {get; set; }
+        public List<KeyValuePair<string, string>> Cookies {get; set; }
         public string CurrentEnvironment 
         {
             get {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -30,78 +31,118 @@ namespace webtest1.Services
 
         public async Task<bool> Delete(string id)
         {
-            var client = _clientFactory.CreateClient();                        
-            var request = new HttpRequestMessage(HttpMethod.Delete, _url_get_all + "/" + id);                                                
-            var response = await client.SendAsync(request);            
+            try
+            {
+                var client = _clientFactory.CreateClient();                        
+                var request = new HttpRequestMessage(HttpMethod.Delete, _url_get_all + "/" + id);                                                
+                var response = await client.SendAsync(request);            
 
-            return response.IsSuccessStatusCode;  
+                return response.IsSuccessStatusCode;  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in {method} for {Type}", "Delete", typeof(T).Name);
+                return false;
+            }
         }
 
         public async Task<IEnumerable<T>> Get()
         {
-            var client = _clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all);                        
-
-            var response = await client.SendAsync(request);            
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<IEnumerable<T>>(responseStream);
-                return result;
-            }  
-            else
+                var client = _clientFactory.CreateClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all);                        
+
+                var response = await client.SendAsync(request);            
+
+                if (response.IsSuccessStatusCode)
+                {
+                    using var responseStream = await response.Content.ReadAsStreamAsync();
+                    var result = await JsonSerializer.DeserializeAsync<IEnumerable<T>>(responseStream);
+                    return result;
+                }  
+                else
+                {
+                    return new List<T>();
+                }   
+            }
+            catch (Exception ex)
             {
-                return null;
-            }   
+                _logger.LogError(ex, "Error in {method} for {Type}", "Get", typeof(T).Name);
+                return new List<T>();
+            }
         }
 
         public async Task<T> GetById(string id)
         {
-            var client = _clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all + "/" + id);                                    
-            var response = await client.SendAsync(request);            
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, _url_get_all + "/" + id);                                    
+                var response = await client.SendAsync(request);            
 
-            if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    using var responseStream = await response.Content.ReadAsStreamAsync();
+                    var result = await JsonSerializer.DeserializeAsync<T>(responseStream);
+                    return result;
+                }  
+                else
+                {
+                    return default;
+                }
+            }
+            catch (Exception ex)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<T>(responseStream);
-                return result;
-            }  
-            else
-            {
+                _logger.LogError(ex, "Error in {method} for {Type}", "GetById", typeof(T).Name);
                 return default;
             }
         }
 
         public async Task<bool> Post(T model)
         {
-            var client = _clientFactory.CreateClient();
-            client.DefaultRequestHeaders
-                .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-            var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all);                      
-            request.Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            
-            var response = await client.SendAsync(request);            
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                client.DefaultRequestHeaders
+                    .Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                
+                var request = new HttpRequestMessage(HttpMethod.Post, _url_get_all);                      
+                request.Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                
+                var response = await client.SendAsync(request);            
 
-            return response.IsSuccessStatusCode;   
+                return response.IsSuccessStatusCode;   
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in {method} for {Type}", "Post", typeof(T).Name);
+                return false;
+            }
         }
 
         public async Task<bool> Put(string id, T model)
         {
-            var client = _clientFactory.CreateClient();
-            client.DefaultRequestHeaders
-                .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-            var request = new HttpRequestMessage(HttpMethod.Put, _url_get_all + "/" + id);                        
-            request.Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            
-            var response = await client.SendAsync(request);            
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                client.DefaultRequestHeaders
+                    .Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                
+                var request = new HttpRequestMessage(HttpMethod.Put, _url_get_all + "/" + id);                        
+                request.Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+                
+                var response = await client.SendAsync(request);            
 
-            return response.IsSuccessStatusCode;  
+                return response.IsSuccessStatusCode;  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in {method} for {Type}", "Put", typeof(T).Name);
+                return false;
+            }
         }
     }
 }

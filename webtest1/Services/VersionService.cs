@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,21 +28,29 @@ namespace webtest1.Services
         
         public async Task<string> GetVersion()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, _url_get);                        
-            var client = _clientFactory.CreateClient();
-            var response = await client.SendAsync(request);            
-            
-            if (response.IsSuccessStatusCode)
+            try
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();      
-                using var sr = new StreamReader(responseStream);
-                var version = await sr.ReadToEndAsync();
-                return version;
-            }  
-            else
+                var request = new HttpRequestMessage(HttpMethod.Get, _url_get);                        
+                var client = _clientFactory.CreateClient();
+                var response = await client.SendAsync(request);            
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    using var responseStream = await response.Content.ReadAsStreamAsync();      
+                    using var sr = new StreamReader(responseStream);
+                    var version = await sr.ReadToEndAsync();
+                    return version;
+                }  
+                else
+                {
+                    return null;
+                }  
+            }
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in {method}", "GetVersion");
                 return null;
-            }  
+            }
         }
     }
 }

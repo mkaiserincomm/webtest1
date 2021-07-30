@@ -70,7 +70,7 @@ namespace webtest1.Tests
             var data = await versionService.Get();
             
             // Evaluate
-            data.Should().BeNull();
+            data.Should().BeEquivalentTo(new List<Category>());
             httpMessageHandler.Verify();
             httpClientFactory.Verify();
             options.Verify();

@@ -9,3 +9,14 @@
     <p>Web: @Model.Version</p>
     <p>Database: @Model.DataVersion</p>
 </div>
+<div class="text-center">
+    <dl>
+        
+        <h1 class="display-4">Cookies</h1>    
+        @foreach(var kvp in Model.Cookies)
+        {
+            <dt>@kvp.Key</dt>
+            <dd>@kvp.Value</dd>    
+        }
+    </dl>
+</div>
