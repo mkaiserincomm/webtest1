@@ -58,7 +58,7 @@ jobs:
           echo "Step 9"
           git checkout sigcntnr
           echo "Step 10"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml          
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml                    
           echo "Step 11"
           git add ./charts/webtest1/values.yaml
           echo "Step 12"
