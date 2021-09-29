@@ -48,7 +48,7 @@ jobs:
           echo "Step 4.5"
           git checkout kaiserhomelab
           echo "Step 5"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml          
+          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml                    
           echo "Step 6"
           git add ./charts/webtest1/values.yaml
           echo "Step 7"
