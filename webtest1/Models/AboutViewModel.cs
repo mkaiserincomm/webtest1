@@ -14,7 +14,10 @@ namespace webtest1.Models
 {
     public class AboutViewModel
     {        
-        public string DataVersion {get; set; }
+        public string CategoryVersion {get; set; }
+        public string CustomerVersion {get; set; }
+        public string EmployeeVersion {get; set; }
+        public string ProductVersion {get; set; }
         public List<KeyValuePair<string, string>> Cookies {get; set; }
         public string CurrentEnvironment 
         {

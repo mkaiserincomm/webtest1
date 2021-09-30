@@ -15,11 +15,14 @@ namespace webtest1.Options
                     default: return "";
                 }
             }
-
-            public virtual string About { get; set; }
+            
             public virtual string Customer { get; set; }
             public virtual string Category { get; set; }
             public virtual string Employee { get; set; }
             public virtual string Product { get; set; }
+            public virtual string CustomerAbout { get; set; }
+            public virtual string CategoryAbout { get; set; }
+            public virtual string EmployeeAbout { get; set; }
+            public virtual string ProductAbout { get; set; }
     }
 }
