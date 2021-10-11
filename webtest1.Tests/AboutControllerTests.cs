@@ -17,7 +17,6 @@ using webtest1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,10 +34,26 @@ namespace webtest1.Tests
             // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
+            
             versionService
-                .Setup(x => x.GetVersion())
+                .Setup(x => x.GetVersionCategory())
                 .ReturnsAsync(resultString)
                 .Verifiable();
+            
+            versionService
+                .Setup(x => x.GetVersionCustomer())
+                .ReturnsAsync(resultString)
+                .Verifiable();
+            
+            versionService            
+                .Setup(x => x.GetVersionEmployee())
+                .ReturnsAsync(resultString)
+                .Verifiable();
+            
+            versionService
+                .Setup(x => x.GetVersionProduct())
+                .ReturnsAsync(resultString)
+                .Verifiable();            
 
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", testEnvironment);
 
@@ -58,7 +73,10 @@ namespace webtest1.Tests
             model.Should().BeOfType<AboutViewModel>();            
 
             var aboutViewModel = ((AboutViewModel)model);            
-            aboutViewModel.DataVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.CategoryVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.CustomerVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.EmployeeVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.ProductVersion.Should().BeEquivalentTo(resultString);
             aboutViewModel.CurrentEnvironment.Should().BeEquivalentTo(testEnvironment);
             aboutViewModel.Version.Should().BeEquivalentTo(versionTest);                        
         }
@@ -73,10 +91,26 @@ namespace webtest1.Tests
             // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
+            
             versionService
-                .Setup(x => x.GetVersion())
+                .Setup(x => x.GetVersionCategory())
                 .ReturnsAsync(resultString)
                 .Verifiable();
+            
+            versionService
+                .Setup(x => x.GetVersionCustomer())
+                .ReturnsAsync(resultString)
+                .Verifiable();
+            
+            versionService            
+                .Setup(x => x.GetVersionEmployee())
+                .ReturnsAsync(resultString)
+                .Verifiable();
+            
+            versionService
+                .Setup(x => x.GetVersionProduct())
+                .ReturnsAsync(resultString)
+                .Verifiable();          
 
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", testEnvironment);
 
@@ -96,7 +130,10 @@ namespace webtest1.Tests
             model.Should().BeOfType<AboutViewModel>();            
 
             var aboutViewModel = ((AboutViewModel)model);            
-            aboutViewModel.DataVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.CategoryVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.CustomerVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.EmployeeVersion.Should().BeEquivalentTo(resultString);
+            aboutViewModel.ProductVersion.Should().BeEquivalentTo(resultString);
             aboutViewModel.CurrentEnvironment.Should().BeEquivalentTo(testEnvironment);
             aboutViewModel.Version.Should().BeEquivalentTo(versionTest);                        
         }
