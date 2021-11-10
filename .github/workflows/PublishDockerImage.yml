@@ -10,6 +10,7 @@ jobs:
     steps:      
       - name: Check out the repo
         uses: actions/checkout@v2
+      
       - name: Docker meta
         id: meta
         uses: crazy-max/ghaction-docker-meta@v2
@@ -18,11 +19,13 @@ jobs:
           images: mgkaiser/webtest1          
           flavor: latest=false
           tags: type=raw,enable=true,prefix=Build-,value=${{ github.run_number }}
+      
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
@@ -31,37 +34,32 @@ jobs:
           build-args: "SUFFIX=${{ github.run_number }}"      
           tags:   ${{ steps.meta.outputs.tags }} 
           labels: ${{ steps.meta.outputs.labels }}  
+      
       - name: Update the helm chart
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TAGS: ${{ github.run_number }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          echo "Step 1"
+          echo "Clone the helm repository, checkout the main branch"
           git clone https://mkaiserincomm:$GITHUB_TOKEN@github.com/mkaiserincomm/webtest1-helm
-          echo "Step 2"
-          git config --global user.email "mkaiser@incomm.com"
-          echo "Step 3"
+          git checkout main
+          
+          echo "Set Github Credentials"
+          git config --global user.email "mkaiser@incomm.com"          
           git config --global user.name "Michael Kaiser"
-          echo "Step 4"
+          
+          echo "Go to the repository directory"
           cd webtest1-helm
-          echo "Step 4.5"
-          git checkout kaiserhomelab
-          echo "Step 5"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml                    
-          echo "Step 6"
-          git add ./charts/webtest1/values.yaml
-          echo "Step 7"
-          git commit -m "Updated build number"
-          echo "Step 8"
-          git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/webtest1-helm
-          echo "Step 9"
-          git checkout sigcntnr
-          echo "Step 10"
-          cat ./values.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.yaml                    
-          echo "Step 11"
-          git add ./charts/webtest1/values.yaml
-          echo "Step 12"
-          git commit -m "Updated build number"
-          echo "Step 13"
+
+          echo "Update the chart for environment kaiserhomelab"
+          cat ./values.kaiserhomelab.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.kaiserhomelab.yaml                              
+          git add ./charts/webtest1/values.kaiserhomelab.yaml          
+                              
+          echo "Update the chart for environment sigcntnr"
+          cat ./values.sigcntnr.yaml | sed 's/tag: \"latest\"/tag: \"Build-'$GITHUB_TAGS'\"/' | sed 's/version: \"latest\"/version: \"Build-'$GITHUB_TAGS'\"/' > ./charts/webtest1/values.sigcntnr.yaml                              
+          git add ./charts/webtest1/values.sigcntnr.yaml
+          
+          echo "Commit and push the changes"
+          git commit -m "Updated build number"          
           git push --set-upstream https://mkaiserincomm:$API_TOKEN@github.com/mkaiserincomm/webtest1-helm
