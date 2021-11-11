@@ -18,9 +18,10 @@ FROM build AS publish
 ARG SUFFIX
 #RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix ${SUFFIX}
 RUN dotnet publish "webtest1.csproj" -c Release -r linux-x64 -o /app/publish --version-suffix ${SUFFIX} --self-contained true /p:PublishSingleFile=true /p:DebugType=None /p:DebugSymbols=false
-RUN ls /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN pwd
+RUN ls
 ENTRYPOINT ["webtest1"]
