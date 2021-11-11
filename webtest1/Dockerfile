@@ -1,5 +1,5 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
-#FROM alpine:3.14.2 AS base
+#FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
+FROM alpine:3.14.2 AS base
 WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://*:80
@@ -22,4 +22,5 @@ RUN dotnet publish "webtest1.csproj" -c Release -r linux-x64 -o /app/publish --v
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["./webtest1"]
+#ENTRYPOINT ["./webtest1"]
+ENTRYPOINT ["/bin/sh"]
