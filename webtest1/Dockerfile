@@ -22,6 +22,4 @@ RUN dotnet publish "webtest1.csproj" -c Release -r linux-x64 -o /app/publish --v
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN pwd
-RUN ls -lr
-ENTRYPOINT ["webtest1"]
+ENTRYPOINT ["/app/webtest1"]
