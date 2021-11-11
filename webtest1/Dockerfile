@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
+#FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
+FROM alpine:3.14.2 AS base
 WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://*:80
@@ -15,7 +16,8 @@ RUN dotnet build "webtest1.csproj" -c Release -o /app/build --version-suffix ${S
 
 FROM build AS publish
 ARG SUFFIX
-RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix ${SUFFIX}
+#RUN dotnet publish "webtest1.csproj" -c Release -o /app/publish --version-suffix ${SUFFIX}
+RUN dotnet publish "webtest1.csproj" -c Release -r linux-x64 -o /app/publish --version-suffix ${SUFFIX} --self-contained true /p:PublishSingleFile=true /p:DebugType=None /p:DebugSymbols=false
 
 FROM base AS final
 WORKDIR /app
