@@ -23,5 +23,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 RUN pwd
-RUN ls
+RUN ls -lr
 ENTRYPOINT ["webtest1"]
