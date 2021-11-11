@@ -1,5 +1,5 @@
-#FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
-FROM alpine:3.14.2 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.14 AS base
+#FROM alpine:3.14.2 AS base
 WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS=http://*:80
