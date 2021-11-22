@@ -18,6 +18,7 @@ namespace webtest1.Models
         public string CustomerVersion {get; set; }
         public string EmployeeVersion {get; set; }
         public string ProductVersion {get; set; }
+        public string Message {get; set;}
         public List<KeyValuePair<string, string>> Cookies {get; set; }
         public string CurrentEnvironment 
         {

@@ -18,11 +18,13 @@ namespace webtest1.Controllers
     {        
         private readonly ILogger<AboutController> _logger;     
         private readonly IVersionService _versionService;
+        private readonly IConfiguration _configuration;
 
-        public AboutController(ILogger<AboutController> logger, IVersionService versionService)
+        public AboutController(ILogger<AboutController> logger, IVersionService versionService, IConfiguration configuration)
         {
             _logger = logger;            
             _versionService = versionService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -32,6 +34,7 @@ namespace webtest1.Controllers
             model.CustomerVersion = await _versionService.GetVersionCustomer();
             model.EmployeeVersion = await _versionService.GetVersionEmployee();
             model.ProductVersion = await _versionService.GetVersionProduct();
+            model.Message = _configuration["Message"];
 
             if (Request.Cookies != null) model.Cookies = Request.Cookies.ToList();            
             return View(model);
