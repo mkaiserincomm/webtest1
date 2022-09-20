@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/webtest1/bin/Debug/net5.0/webtest1.dll",
+            "program": "${workspaceFolder}/webtest1/bin/Debug/net6.0/webtest1.dll",
             "args": [],
             "cwd": "${workspaceFolder}/webtest1",
             "stopAtEntry": false,
@@ -35,7 +35,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/webtest1.Tests/bin/Debug/net5.0/webtest1.Tests.dll",
+            "program": "${workspaceFolder}/webtest1.Tests/bin/Debug/net6.0/webtest1.Tests.dll",
             "args": [],
             "cwd": "${workspaceFolder}/webtest1.Tests",
             "stopAtEntry": false,

@@ -34,6 +34,12 @@ namespace webtest1.Tests
             // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
+            var configuration = new Mock<IConfiguration>();
+
+            configuration
+                .Setup(x => x["Message"])
+                .Returns("Test Message")
+                .Verifiable();                
             
             versionService
                 .Setup(x => x.GetVersionCategory())
@@ -60,7 +66,7 @@ namespace webtest1.Tests
             // Act            
             var httpContext = new DefaultHttpContext();  
             var controllerContext = new ControllerContext() { HttpContext = httpContext };                
-            var aboutController = new AboutController(logger.Object, versionService.Object) { ControllerContext = controllerContext};
+            var aboutController = new AboutController(logger.Object, versionService.Object, configuration.Object) { ControllerContext = controllerContext};            
             var result = await aboutController.Index();            
 
             // Assert
@@ -91,6 +97,12 @@ namespace webtest1.Tests
             // Arrange
             var logger = new Mock<ILogger<AboutController>>();                   
             var versionService = new Mock<IVersionService>();
+                        var configuration = new Mock<IConfiguration>();
+
+            configuration
+                .Setup(x => x["Message"])
+                .Returns("Test Message")
+                .Verifiable();
             
             versionService
                 .Setup(x => x.GetVersionCategory())
@@ -117,7 +129,7 @@ namespace webtest1.Tests
             // Act
             var httpContext = new DefaultHttpContext();  
             var controllerContext = new ControllerContext() { HttpContext = httpContext };                
-            var aboutController = new AboutController(logger.Object, versionService.Object) { ControllerContext = controllerContext};            
+            var aboutController = new AboutController(logger.Object, versionService.Object, configuration.Object) { ControllerContext = controllerContext};            
             var result = await aboutController.About();            
 
             // Assert
