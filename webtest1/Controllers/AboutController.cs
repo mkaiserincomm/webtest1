@@ -29,11 +29,11 @@ namespace webtest1.Controllers
 
         public async Task<IActionResult> Index()
         {            
-            var model = new AboutViewModel();
-            model.CategoryVersion = await _versionService.GetVersionCategory();
-            model.CustomerVersion = await _versionService.GetVersionCustomer();
-            model.EmployeeVersion = await _versionService.GetVersionEmployee();
-            model.ProductVersion = await _versionService.GetVersionProduct();
+            var model = new AboutViewModel();            
+            try { model.CategoryVersion = await _versionService.GetVersionCategory(); } catch() {}
+            try { model.CustomerVersion = await _versionService.GetVersionCustomer(); } catch() {}
+            try { model.EmployeeVersion = await _versionService.GetVersionEmployee(); } catch() {}
+            try { model.ProductVersion = await _versionService.GetVersionProduct(); } catch() {}
             model.Message = _configuration["Message"];
 
             if (Request.Cookies != null) model.Cookies = Request.Cookies.ToList();            
