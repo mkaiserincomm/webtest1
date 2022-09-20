@@ -30,10 +30,10 @@ namespace webtest1.Controllers
         public async Task<IActionResult> Index()
         {            
             var model = new AboutViewModel();            
-            try { model.CategoryVersion = await _versionService.GetVersionCategory(); } catch() {}
-            try { model.CustomerVersion = await _versionService.GetVersionCustomer(); } catch() {}
-            try { model.EmployeeVersion = await _versionService.GetVersionEmployee(); } catch() {}
-            try { model.ProductVersion = await _versionService.GetVersionProduct(); } catch() {}
+            try { model.CategoryVersion = await _versionService.GetVersionCategory(); } catch(Exception) {}
+            try { model.CustomerVersion = await _versionService.GetVersionCustomer(); } catch(Exception) {}
+            try { model.EmployeeVersion = await _versionService.GetVersionEmployee(); } catch(Exception) {}
+            try { model.ProductVersion = await _versionService.GetVersionProduct(); } catch(Exception) {}
             model.Message = _configuration["Message"];
 
             if (Request.Cookies != null) model.Cookies = Request.Cookies.ToList();            
